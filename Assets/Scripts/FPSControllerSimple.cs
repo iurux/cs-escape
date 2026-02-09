@@ -21,6 +21,10 @@ public class FPSControllerSimple : MonoBehaviour
     [Header("Inventory UI")]
     public GameObject inventoryPanel;
 
+    [Header("Book Reading")]
+    public GameObject bookCanvas;     // 你那个整体暗屏 + 白纸的 Canvas
+    public TMP_Text bookText;         // 白纸上的文字
+
     [Header("Systems")]
     public InventorySimple inventory;
     public DialogueUI dialogueUI;
@@ -57,6 +61,9 @@ public class FPSControllerSimple : MonoBehaviour
         HandleInventoryToggle();
 
         if (inventoryOpen) return;
+
+        // Book 正在阅读时：禁止一切移动/交互
+        if (isReadingBook) return;
 
         // Check if the Puzzle is active 
         if (circuitPuzzle != null && circuitPuzzle.puzzleCanvasPanel.activeSelf) 
@@ -209,6 +216,9 @@ public class FPSControllerSimple : MonoBehaviour
                     }
                 }
 
+                // ================== Book  ==================
+                TryOpenBook(hit);
+
                 // ③ Fallback
                 Debug.Log("No interactable script found on object.");
             }
@@ -255,4 +265,89 @@ public class FPSControllerSimple : MonoBehaviour
             
         Debug.Log("Circuit(pipe) game Resumed & Lights should be ON");
     }
+
+    // ============================================================
+    // ================== Book Reading System =====================
+    // ============================================================
+
+    [Header("Book UI (Reading)")]
+    public GameObject bookCanvasPanel;     // 你的 Book Canvas/Panel（初始关闭）
+    public TMP_Text bookContentText;       // 白纸上的文字 TMP_Text
+    public string closeKeyHint = "Press E to close";
+
+    bool isReadingBook = false;
+    float savedTimeScale = 1f;
+
+    void TryOpenBook(RaycastHit hit)
+    {
+        // 同一个 Interact tag 里，只有“挂了 BookInteractable”才会触发
+        BookReadable book =
+            hit.collider.GetComponent<BookReadable>() ??
+            hit.collider.GetComponentInParent<BookReadable>();
+
+        if (book == null)
+        {
+            Debug.Log("No interactable script found on object.");
+            return;
+        }
+
+        OpenBookUI(book.content);
+    }
+
+    void OpenBookUI(string content)
+    {
+        if (bookCanvasPanel == null || bookContentText == null)
+        {
+            Debug.LogWarning("Book UI references missing: bookCanvasPanel / bookContentText");
+            return;
+        }
+
+        isReadingBook = true;
+
+        // Pause world（也能兼容你之后别的暂停，比如 inventory）
+        savedTimeScale = Time.timeScale;
+        Time.timeScale = 0f;
+
+        // UI 显示
+        bookCanvasPanel.SetActive(true);
+
+        // 不需要 title：直接显示内容即可
+        bookContentText.text = content;
+
+        // 鼠标放开，方便玩家阅读
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // 隐藏交互提示
+        interactPrompt.gameObject.SetActive(false);
+    }
+
+    public void CloseBookUI()
+    {
+        if (!isReadingBook) return;
+
+        isReadingBook = false;
+
+        if (bookCanvasPanel != null)
+            bookCanvasPanel.SetActive(false);
+
+        // 恢复时间
+        Time.timeScale = savedTimeScale;
+
+        // 恢复鼠标锁定
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    // 你想用 E 关闭：因为 Time.timeScale=0，Update 还能跑，所以可以监听
+    void LateUpdate()
+    {
+        if (!isReadingBook) return;
+
+        if (Keyboard.current.eKey.wasPressedThisFrame)
+        {
+            CloseBookUI();
+        }
+    }
+
 }
