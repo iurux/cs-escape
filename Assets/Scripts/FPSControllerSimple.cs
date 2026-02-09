@@ -191,7 +191,7 @@ public class FPSControllerSimple : MonoBehaviour
                 }
 
                 // ③ Circuit Puzzle (Pipe)
-                if (hit.collider.name.Contains("ElectricityBox") || hit.collider.CompareTag("Interact"))
+                if (hit.collider.name.Contains("ElectricityBox"))
                 {
                     if (circuitPuzzle != null)
                     {
@@ -217,7 +217,8 @@ public class FPSControllerSimple : MonoBehaviour
                 }
 
                 // ================== Book  ==================
-                TryOpenBook(hit);
+                if (TryOpenBook(hit))
+                    return;
 
                 // ③ Fallback
                 Debug.Log("No interactable script found on object.");
@@ -274,28 +275,28 @@ public class FPSControllerSimple : MonoBehaviour
     public GameObject bookCanvasPanel;     // 你的 Book Canvas/Panel（初始关闭）
     public TMP_Text bookContentText;       // 白纸上的文字 TMP_Text
     public string closeKeyHint = "Press E to close";
+    int bookOpenedFrame = -1;
 
     bool isReadingBook = false;
     float savedTimeScale = 1f;
 
-    void TryOpenBook(RaycastHit hit)
+    bool TryOpenBook(RaycastHit hit)
     {
-        // 同一个 Interact tag 里，只有“挂了 BookInteractable”才会触发
         BookReadable book =
             hit.collider.GetComponent<BookReadable>() ??
             hit.collider.GetComponentInParent<BookReadable>();
 
-        if (book == null)
-        {
-            Debug.Log("No interactable script found on object.");
-            return;
-        }
+        if (book == null) return false;
 
         OpenBookUI(book.content);
+        return true;
     }
+
 
     void OpenBookUI(string content)
     {
+        Debug.Log("OpenBookUI called");
+
         if (bookCanvasPanel == null || bookContentText == null)
         {
             Debug.LogWarning("Book UI references missing: bookCanvasPanel / bookContentText");
@@ -320,6 +321,8 @@ public class FPSControllerSimple : MonoBehaviour
 
         // 隐藏交互提示
         interactPrompt.gameObject.SetActive(false);
+
+        bookOpenedFrame = Time.frameCount;
     }
 
     public void CloseBookUI()
@@ -343,6 +346,9 @@ public class FPSControllerSimple : MonoBehaviour
     void LateUpdate()
     {
         if (!isReadingBook) return;
+
+        // 防止同一帧按E打开又立刻触发关闭
+        if (Time.frameCount == bookOpenedFrame) return;
 
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
