@@ -363,7 +363,7 @@ public class FPSControllerSimple : MonoBehaviour
         // 防止同一帧按E打开又立刻触发关闭
         if (Time.frameCount == bookOpenedFrame) return;
 
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             CloseBookUI();
         }
