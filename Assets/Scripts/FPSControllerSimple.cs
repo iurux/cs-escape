@@ -216,6 +216,17 @@ public class FPSControllerSimple : MonoBehaviour
                     }
                 }
 
+                // === Terminal Computer (Area A) ===
+                TerminalInteractable terminalComputer =
+                    hit.collider.GetComponent<TerminalInteractable>() ??
+                    hit.collider.GetComponentInParent<TerminalInteractable>();
+
+                if (terminalComputer != null)
+                {
+                    terminalComputer.Interact(this);
+                    return;
+                }
+
                 // ================== Book  ==================
                 if (TryOpenBook(hit))
                     return;
@@ -316,8 +327,8 @@ public class FPSControllerSimple : MonoBehaviour
         bookContentText.text = content;
 
         // 鼠标放开，方便玩家阅读
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.None;
+        //Cursor.visible = true;
 
         // 隐藏交互提示
         interactPrompt.gameObject.SetActive(false);
@@ -338,8 +349,8 @@ public class FPSControllerSimple : MonoBehaviour
         Time.timeScale = savedTimeScale;
 
         // 恢复鼠标锁定
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     // 你想用 E 关闭：因为 Time.timeScale=0，Update 还能跑，所以可以监听
