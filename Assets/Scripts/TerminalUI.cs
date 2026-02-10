@@ -9,6 +9,9 @@ public class TerminalUI : MonoBehaviour
     public TMP_Text terminalText;         // 历史输出
     public TMP_InputField inputField;     // 输入行（自带闪烁竖光标）
 
+    [Header("ControlCanvas")]
+    public GameObject controlCanvas;
+
     [Header("Behavior")]
     public string successLine = "ACCESS GRANTED";
     public Key closeKey = Key.Escape;
@@ -19,7 +22,7 @@ public class TerminalUI : MonoBehaviour
 
     void Awake()
     {
-        if (rootPanel != null) rootPanel.SetActive(false);
+        //if (rootPanel != null) rootPanel.SetActive(false);
 
         // 确保回车提交时走 OnSubmit
         inputField.onSubmit.RemoveAllListeners();
@@ -49,21 +52,30 @@ public class TerminalUI : MonoBehaviour
         currentPlayer = player;
         expectedAnswer = expected;
 
-        // 暂停世界
-        Time.timeScale = 0f;
+        // ✅ 锁住玩家控制（相机/移动）
+        if (currentPlayer != null) currentPlayer.SetUILock(true);
 
-        // 解锁鼠标
+        // UI 先开（更稳定）
+        rootPanel.SetActive(true);
+
+        terminalText.text = headerContent.TrimEnd() + "\n\n> ";
+        inputField.text = "";
+
+        // Pause world
+        Time.timeScale = 0f;
+        controlCanvas.SetActive(false);
+
+        // 鼠标放开
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // 显示UI
-        rootPanel.SetActive(true);
+        // ✅ 下一帧再强制聚焦（避免第一次不生效/要点第二次）
+        StartCoroutine(FocusInputNextFrame());
+    }
 
-        // 写入终端初始内容（每台电脑不同）
-        terminalText.text = headerContent.TrimEnd() + "\n\n> ";
-
-        // 清空并聚焦输入（会显示闪烁光标）
-        inputField.text = "";
+    System.Collections.IEnumerator FocusInputNextFrame()
+    {
+        yield return null; // 等一帧（不受 timeScale 影响）
         inputField.ActivateInputField();
         inputField.Select();
     }
@@ -77,13 +89,14 @@ public class TerminalUI : MonoBehaviour
 
         if (rootPanel != null) rootPanel.SetActive(false);
 
-        // 恢复世界
         Time.timeScale = 1f;
 
-        // 恢复鼠标锁定
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        // ✅ 恢复玩家控制
+        controlCanvas.SetActive(true);
+        if (currentPlayer != null) currentPlayer.SetUILock(false);
         currentPlayer = null;
     }
 

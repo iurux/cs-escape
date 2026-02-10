@@ -34,6 +34,7 @@ public class FPSControllerSimple : MonoBehaviour
     Vector3 vel;
     CharacterController cc;
     bool inventoryOpen;
+    bool uiLock;
 
     void Start()
     {
@@ -60,10 +61,7 @@ public class FPSControllerSimple : MonoBehaviour
     {
         HandleInventoryToggle();
 
-        if (inventoryOpen) return;
-
-        // Book 正在阅读时：禁止一切移动/交互
-        if (isReadingBook) return;
+        if (inventoryOpen || uiLock || isReadingBook) return;
 
         // Check if the Puzzle is active 
         if (circuitPuzzle != null && circuitPuzzle.puzzleCanvasPanel.activeSelf) 
@@ -353,7 +351,11 @@ public class FPSControllerSimple : MonoBehaviour
         //Cursor.visible = false;
     }
 
-    // 你想用 E 关闭：因为 Time.timeScale=0，Update 还能跑，所以可以监听
+    public void SetUILock(bool locked)
+    {
+        uiLock = locked;
+    }
+
     void LateUpdate()
     {
         if (!isReadingBook) return;
