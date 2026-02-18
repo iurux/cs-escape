@@ -40,11 +40,16 @@ public class OpeningScene : MonoBehaviour
     [TextArea(2, 3)]
     public string[] openingThoughts =
     {
-        "Ehhhh.... What time is it now?",
-        "Already 2 am...",
-        "The lab is due tomorrow but still a ton of bugs to fix...",
-        "Okay I need some coffee refresher.",
-        "I remember SnackOverflow has some."
+        "(Phone: ring... ring... ring...)", 
+        "Ugh... who’s calling at this hour...?", 
+        "2 a.m...? Is that Arthur?", 
+        "Did I fall asleep in the lab again...?", 
+        "Okay... I should head home.", 
+        "Wait...", 
+        "My bag is empty?", 
+        "My laptop... my tablet...", 
+        "Why is everything gone?", 
+        "...There’s a note here."
     };
 
     private void Start()
@@ -74,6 +79,7 @@ public class OpeningScene : MonoBehaviour
 
     private IEnumerator PlayOpeningSequence()
     {
+        Debug.Log("DialogueUI ref = " + dialogueUI);
         // Step 1: Black screen
         menuPanel.SetActive(false);
         blinkPanel.gameObject.SetActive(true);

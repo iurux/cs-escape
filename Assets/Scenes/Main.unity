@@ -2883,11 +2883,16 @@ MonoBehaviour:
     m_RotationOrder: 4
   disableControllerDuringStandUp: 1
   openingThoughts:
-  - Ehhhh.... What time is it now?
-  - Already 2 am...
-  - The lab is due tomorrow but still a ton of bugs to fix...
-  - Okay I need some coffee refresher.
-  - I remember SnackOverflow has some.
+  - '(Phone: ring... ring... ring...)'
+  - "Ugh... who\u2019s calling at this hour...?"
+  - 2 a.m...? Is that Arthur?
+  - Did I fall asleep in the lab again...?
+  - Okay... I should head home.
+  - Wait...
+  - My bag is empty?
+  - My laptop... my tablet...
+  - Why is everything gone?
+  - "...There\u2019s a note here."
 --- !u!4 &184706604
 Transform:
   m_ObjectHideFlags: 0
