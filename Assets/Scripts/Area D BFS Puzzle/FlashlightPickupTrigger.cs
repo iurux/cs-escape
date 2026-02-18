@@ -5,6 +5,8 @@ public class FlashlightPickupTrigger : MonoBehaviour
     // [Header("이 칸에 플레이어의 FlashlightHolder를 드래그해서 넣으세요")]
     public GameObject playerFlashlightHolder;
 
+    public GameObject guideHUD;
+
     // 이 함수는 이 물체가 파괴될 때 자동으로 실행됩니다.
     private void OnDestroy()
     {
@@ -16,6 +18,12 @@ public class FlashlightPickupTrigger : MonoBehaviour
         {
             playerFlashlightHolder.SetActive(true);
             Debug.Log("손전등을 획득하여 플레이어 전등을 활성화했습니다.");
+        }
+
+        if (guideHUD != null)
+        {
+            guideHUD.SetActive(true);
+            Debug.Log("Flashlight 가이드 활성화");
         }
     }
 }
