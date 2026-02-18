@@ -1,49 +1,61 @@
 using UnityEngine;
+using TMPro;
 
 public class UVInk : MonoBehaviour
 {
+    public float fadeSpeed = 3f;
+
     private SpriteRenderer spriteRenderer;
+    private TextMeshPro tmp;
+
     private float currentAlpha = 0f;
-    public float fadeSpeed = 2.0f; // ºûÀÌ ¾øÀ¸¸é »ç¶óÁö´Â ¼Óµµ
+    private bool isBeingLit = false;
 
     void Start()
     {
-        // ÅØ½ºÆ®°¡ ¾Æ´Ñ SpriteRenderer¸¦ °¡Á®¿É´Ï´Ù.
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        // ½ÃÀÛÇÒ ¶§ ¿ÏÀüÈ÷ Åõ¸íÇÏ°Ô ¸¸µì´Ï´Ù.
-        if (spriteRenderer != null)
-        {
-            Color c = spriteRenderer.color;
-            c.a = 0;
-            spriteRenderer.color = c;
-        }
+        tmp = GetComponent<TextMeshPro>();
+
+        SetAlpha(0f);
     }
 
     void Update()
     {
-        // ºûÀ» ¹ŞÁö ¾ÊÀ¸¸é ¼­¼­È÷ Åõ¸íÇØÁı´Ï´Ù.
-        if (currentAlpha > 0)
+        if (isBeingLit)
+        {
+            currentAlpha += Time.deltaTime * fadeSpeed;
+        }
+        else
         {
             currentAlpha -= Time.deltaTime * fadeSpeed;
-            SetAlpha(currentAlpha);
         }
+
+        currentAlpha = Mathf.Clamp01(currentAlpha);
+        SetAlpha(currentAlpha);
+
+        isBeingLit = false;
     }
 
-    // ¡Ú Áß¿ä: ÀÌ ºÎºĞÀÌ ÀÖ¾î¾ß UVFlashlight¿¡¼­ ¿¡·¯°¡ ³ªÁö ¾Ê½À´Ï´Ù.
     public void Reveal()
     {
-        currentAlpha = 1.0f; // Áï½Ã ¼±¸íÇÏ°Ô
-        SetAlpha(1.0f);
+        isBeingLit = true;
+        Debug.Log("Reveal called");
     }
 
     void SetAlpha(float alpha)
+{
+    if (spriteRenderer != null)
     {
-        if (spriteRenderer != null)
-        {
-            Color c = spriteRenderer.color;
-            c.a = Mathf.Clamp01(alpha);
-            spriteRenderer.color = c;
-        }
+        Color c = spriteRenderer.color;
+        c.a = alpha;
+        spriteRenderer.color = c;
     }
+
+    if (tmp != null)
+    {
+        // æ§åˆ¶æè´¨ Face Color
+        tmp.fontMaterial.SetColor("_FaceColor", 
+            new Color(1f, 1f, 1f, alpha));
+    }
+}
 }
