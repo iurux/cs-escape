@@ -11,8 +11,13 @@ public class TerminalProgressManager : MonoBehaviour
     [Header("Progress Screen (4th)")]
     public TMP_Text progressText; // 第4台屏幕上的 TMP_Text（显示 0/3）
 
+    [Header("Objects To Move When All Solved")]
+    public Transform object1;
+    public Transform object2;
+
     int solvedCount = 0;
     TerminalInteractable currentComputer;
+    bool hasTriggeredMove = false; // 防止重复触发
 
     void Awake()
     {
@@ -38,6 +43,8 @@ public class TerminalProgressManager : MonoBehaviour
         currentComputer.MarkSolved();
         solvedCount = CountSolved();
         RefreshProgress();
+
+        CheckAllSolved();
     }
 
     int CountSolved()
@@ -53,5 +60,19 @@ public class TerminalProgressManager : MonoBehaviour
     {
         if (progressText != null)
             progressText.text = $"{solvedCount} / 3";
+    }
+
+    void CheckAllSolved()
+    {
+        if (solvedCount == 3 && !hasTriggeredMove)
+        {
+            hasTriggeredMove = true;
+
+            if (object1 != null)
+                object1.position += new Vector3(0.3f, 0f, 0f);
+
+            if (object2 != null)
+                object2.position += new Vector3(0.3f, 0f, 0f);
+        }
     }
 }
