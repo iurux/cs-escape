@@ -132,9 +132,16 @@ public class FPSControllerSimple : MonoBehaviour
                 FlashlightPickupTrigger uvPickup = hit.collider.GetComponent<FlashlightPickupTrigger>() ?? 
                                          hit.collider.GetComponentInParent<FlashlightPickupTrigger>();
         
-                if (uvPickup != null)
-                {
+                if (uvPickup != null) {
                     uvPickup.Interact();
+                    return; 
+                }
+
+                NormalFlashlightPickup normalPickup = hit.collider.GetComponent<NormalFlashlightPickup>() ?? 
+                                             hit.collider.GetComponentInParent<NormalFlashlightPickup>();
+
+                if (normalPickup != null) { 
+                    normalPickup.Interact(); 
                     return; 
                 }
 
