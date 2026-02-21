@@ -1157,7 +1157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &73179199
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22193,7 +22193,7 @@ PrefabInstance:
       addedObject: {fileID: 1998679092}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: b694b8ec5c41f6247843a2b67222fda6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1998679097}
+      addedObject: {fileID: 1998679094}
   m_SourcePrefab: {fileID: 100100000, guid: b694b8ec5c41f6247843a2b67222fda6, type: 3}
 --- !u!4 &1212366064 stripped
 Transform:
@@ -33454,8 +33454,8 @@ Transform:
   m_GameObject: {fileID: 1688502971}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -17.809, y: 0.344, z: -15.877}
-  m_LocalScale: {x: 1.2545769, y: 0.64265, z: 0.20385}
+  m_LocalPosition: {x: -12.65, y: 3.15, z: -21.88}
+  m_LocalScale: {x: 17.127512, y: 8.21, z: 11.94697}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -33473,6 +33473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guideHUD: {fileID: 73179198}
+  playerFlashlight: {fileID: 1734293812}
 --- !u!1 &1689442902
 GameObject:
   m_ObjectHideFlags: 0
@@ -34541,6 +34542,9 @@ MonoBehaviour:
     m_Bits: 64
   detectRange: 5
   lightAngle: 45
+  guideHUD: {fileID: 0}
+  isPickedUp: 0
+  canUseInArea: 0
 --- !u!1001 &1750018072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38479,7 +38483,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -38490,7 +38494,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b694b8ec5c41f6247843a2b67222fda6, type: 3}
   m_PrefabInstance: {fileID: 1203337983}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1998679097
+--- !u!114 &1998679094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38503,7 +38507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerFlashlightHolder: {fileID: 1734293810}
-  guideHUD: {fileID: 0}
+  guideHUD: {fileID: 73179198}
 --- !u!1001 &2000321687
 PrefabInstance:
   m_ObjectHideFlags: 0

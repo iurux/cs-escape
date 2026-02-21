@@ -128,6 +128,16 @@ public class FPSControllerSimple : MonoBehaviour
 
             if (Keyboard.current.fKey.wasPressedThisFrame)
             {
+                // flashlight logic
+                FlashlightPickupTrigger uvPickup = hit.collider.GetComponent<FlashlightPickupTrigger>() ?? 
+                                         hit.collider.GetComponentInParent<FlashlightPickupTrigger>();
+        
+                if (uvPickup != null)
+                {
+                    uvPickup.Interact();
+                    return; 
+                }
+
                 PickupItem p = hit.collider.GetComponentInParent<PickupItem>();
 
                 string itemId = (p != null && !string.IsNullOrEmpty(p.itemId))

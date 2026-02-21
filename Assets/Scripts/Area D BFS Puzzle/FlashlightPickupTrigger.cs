@@ -2,28 +2,26 @@ using UnityEngine;
 
 public class FlashlightPickupTrigger : MonoBehaviour
 {
-    // [Header("이 칸에 플레이어의 FlashlightHolder를 드래그해서 넣으세요")]
     public GameObject playerFlashlightHolder;
-
     public GameObject guideHUD;
 
-    // 이 함수는 이 물체가 파괴될 때 자동으로 실행됩니다.
-    private void OnDestroy()
+    public void Interact()
     {
-        // 게임이 꺼지는 중이 아니고, 플레이어 전등 홀더가 설정되어 있다면
-        if (playerFlashlightHolder != null && !gameObject.scene.isLoaded) return; 
-        
-        // 아이템을 집어서 이 오브젝트가 파괴되는 순간 플레이어 손의 전등을 켭니다.
         if (playerFlashlightHolder != null)
         {
             playerFlashlightHolder.SetActive(true);
-            Debug.Log("손전등을 획득하여 플레이어 전등을 활성화했습니다.");
+            
+            UVFlashlight uv = playerFlashlightHolder.GetComponentInChildren<UVFlashlight>(true);
+            if (uv != null)
+            {
+                uv.isPickedUp = true;   // 획득 상태로 변경
+                uv.canUseInArea = true; // 주운 직후엔 일단 쓸 수 있게 함 (문을 통과하기 전까지)
+            }
         }
 
-        if (guideHUD != null)
-        {
-            guideHUD.SetActive(true);
-            Debug.Log("Flashlight 가이드 활성화");
-        }
+        if (guideHUD != null) guideHUD.SetActive(true);
+        
+        // 아이템 오브젝트 삭제
+        Destroy(gameObject);
     }
 }
