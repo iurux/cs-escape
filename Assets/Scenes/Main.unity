@@ -7243,6 +7243,8 @@ MonoBehaviour:
     Hash1 = c7854
 
     Hash3 = Hash2'
+  triggerDialogueAfterReading: 0
+  afterReadingLines: []
 --- !u!4 &356247892 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3204423859770501514, guid: 3713613c4ffcd6945900432c53af79b8, type: 3}
@@ -9199,6 +9201,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: "You didn\u2019t really think I\u2019d let you leave that easily, did
     you?\n\nFind your things.\n\nJust like old times."
+  triggerDialogueAfterReading: 1
+  afterReadingLines:
+  - "Seriously\u2026?"
+  - Is this your idea of a Halloween prank?
+  - ...Fine.
+  - I guess I have to find my stuff.
+  - (Press Tab to check your inventory.)
 --- !u!1 &439014627
 GameObject:
   m_ObjectHideFlags: 0
@@ -16231,6 +16240,8 @@ MonoBehaviour:
   content: 'the value of left becomes the value of right
 
 '
+  triggerDialogueAfterReading: 0
+  afterReadingLines: []
 --- !u!1001 &766989400
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32444,6 +32455,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: Hash3 = ?
+  triggerDialogueAfterReading: 0
+  afterReadingLines: []
 --- !u!1001 &1593929864
 PrefabInstance:
   m_ObjectHideFlags: 0

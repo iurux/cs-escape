@@ -308,6 +308,7 @@ public class FPSControllerSimple : MonoBehaviour
     int bookOpenedFrame = -1;
 
     bool isReadingBook = false;
+    BookReadable currentBook;
     float savedTimeScale = 1f;
 
     bool TryOpenBook(RaycastHit hit)
@@ -318,6 +319,7 @@ public class FPSControllerSimple : MonoBehaviour
 
         if (book == null) return false;
 
+        currentBook = book;  // 记录是哪本书
         OpenBookUI(book.content);
         return true;
     }
@@ -364,25 +366,17 @@ public class FPSControllerSimple : MonoBehaviour
         if (bookCanvasPanel != null)
             bookCanvasPanel.SetActive(false);
 
-        // 恢复时间
         Time.timeScale = savedTimeScale;
 
-        // 恢复鼠标锁定
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-        if (dialogueUI != null)
-    {
-        string[] afterReading = new string[]
+        // 只对特定书触发
+        if (currentBook != null &&
+            currentBook.triggerDialogueAfterReading &&
+            dialogueUI != null)
         {
-            "Seriously…?",
-            "Is this your idea of a Halloween prank?",
-            "...Fine.",
-            "I guess I have to find my stuff.",
-            "(Press Tab to check your inventory.)"
-        };
+            dialogueUI.StartDialogue(currentBook.afterReadingLines);
+        }
 
-        dialogueUI.StartDialogue(afterReading);
-    }
+        currentBook = null;
     }
 
     public void SetUILock(bool locked)
