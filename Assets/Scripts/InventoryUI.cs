@@ -6,6 +6,7 @@ public class InventoryUI : MonoBehaviour
     public Transform itemContainer;     // 拖 ItemContainer
     public ItemSlotUI itemSlotPrefab;   // 拖 ItemSlotPrefab
     public Sprite defaultIcon;          // 可选
+    public ChecklistUI checklistUI;
 
     private Dictionary<string, ItemSlotUI> slots = new Dictionary<string, ItemSlotUI>();
 
@@ -21,5 +22,9 @@ public class InventoryUI : MonoBehaviour
 
         slot.Set(itemId, icon != null ? icon : defaultIcon);
         slots[itemId] = slot;
+        if (checklistUI != null)
+        {
+            checklistUI.MarkCollected(itemId);
+        }
     }
 }
