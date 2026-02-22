@@ -10445,6 +10445,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_mirror (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2632006306482536606, guid: 312dd4f91c36a7c45bb456ed125df66d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3170102796508822904, guid: 312dd4f91c36a7c45bb456ed125df66d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.23329
@@ -10502,7 +10506,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 30505454953929534, guid: 312dd4f91c36a7c45bb456ed125df66d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 312dd4f91c36a7c45bb456ed125df66d, type: 3}
@@ -34454,6 +34459,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_mirror
       objectReference: {fileID: 0}
+    - target: {fileID: 2632006306482536606, guid: 312dd4f91c36a7c45bb456ed125df66d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3170102796508822904, guid: 312dd4f91c36a7c45bb456ed125df66d, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.23329
@@ -34511,7 +34520,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 30505454953929534, guid: 312dd4f91c36a7c45bb456ed125df66d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 312dd4f91c36a7c45bb456ed125df66d, type: 3}
