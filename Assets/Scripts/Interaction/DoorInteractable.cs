@@ -19,7 +19,7 @@ public class DoorInteractable : MonoBehaviour
     public RequirementType requirement = RequirementType.None;
 
     // === Item Requirement ===
-    public string requiredItemId = "student card";
+    public string requiredItemId = "Student Card";
     public string failDialogue = "I forget to pickup my student ID card";
 
     // === Card Reader Requirement ===

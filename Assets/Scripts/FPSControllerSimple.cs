@@ -120,6 +120,8 @@ public class FPSControllerSimple : MonoBehaviour
 
         if (!Physics.Raycast(ray, out RaycastHit hit, interactDistance))
             return;
+        Debug.Log("Ray hit: " + hit.collider.name + 
+          " | Tag: " + hit.collider.tag);
 
         // ---------- Pickup ----------
         if (hit.collider.CompareTag("Pickup"))
@@ -188,8 +190,10 @@ public class FPSControllerSimple : MonoBehaviour
                 // ① Door
                 DoorInteractable door =
                     hit.collider.GetComponentInParent<DoorInteractable>();
+
                 if (door != null)
                 {
+                    Debug.Log("Door found: " + hit.collider.name);
                     door.TryInteract(inventory, dialogueUI);
                     return;
                 }
