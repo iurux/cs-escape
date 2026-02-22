@@ -366,6 +366,19 @@ public class FPSControllerSimple : MonoBehaviour
         // 恢复鼠标锁定
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
+        if (dialogueUI != null)
+    {
+        string[] afterReading = new string[]
+        {
+            "Seriously…?",
+            "Is this your idea of a Halloween prank?",
+            "...Fine.",
+            "I guess I have to find my stuff.",
+            "(Press Tab to check your inventory.)"
+        };
+
+        dialogueUI.StartDialogue(afterReading);
+    }
     }
 
     public void SetUILock(bool locked)
