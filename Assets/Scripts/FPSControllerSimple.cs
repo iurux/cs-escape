@@ -165,6 +165,62 @@ public class FPSControllerSimple : MonoBehaviour
                     inventory.Add(itemId, icon);
 
                 Debug.Log("Picked up: " + itemId);
+
+                // Student Card pickup
+                if (itemId == "Student Card" && dialogueUI != null)
+                {
+                    dialogueUI.StartDialogue(new string[]
+                    {
+                        "Here is my Student Card..."
+                    });
+                }
+
+                // Headphone pickup
+                if (itemId == "Headphone" && dialogueUI != null)
+                {
+                    dialogueUI.StartDialogue(new string[]
+                    {
+                        "Here are my headphones..."
+                    });
+                }
+
+                // Phone pickup
+                if (itemId == "Phone" && dialogueUI != null)
+                {
+                    dialogueUI.StartDialogue(new string[]
+                    {
+                        "Here is my phone..."
+                    });
+                }
+
+                // Flashlight pickup
+                if (itemId == "Flashlight" && dialogueUI != null)
+                {
+                    dialogueUI.StartDialogue(new string[]
+                    {
+                        "Here is a flashlight..."
+                    });
+                }
+
+                // Pen pickup
+                if (itemId == "Pen" && dialogueUI != null)
+                {
+                    dialogueUI.StartDialogue(new string[]
+                    {
+                        "Here is my pen..."
+                    });
+                }
+
+                // Laptop pickup
+                if (itemId == "Laptop" && dialogueUI != null)
+                {
+                    dialogueUI.StartDialogue(new string[]
+                    {
+                        "Here is my water laptop...",
+                        "Why is it even here..."
+                    });
+                }
+
                 Destroy(hit.collider.gameObject);
             }
         }
