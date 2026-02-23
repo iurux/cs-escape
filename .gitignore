@@ -31,3 +31,5 @@
 BuildWeb/
 Build_Web/
 Build/
+!docs/Build/
+!docs/Build/**
