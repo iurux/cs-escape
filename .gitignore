@@ -26,3 +26,8 @@
 *.opendb
 *.VC.db
 .DS_Store
+
+# WebGL builds
+BuildWeb/
+Build_Web/
+Build/
