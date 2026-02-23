@@ -26,6 +26,11 @@ public class MazeGame : MonoBehaviour
     int rule = 1;
     bool solved = false;
 
+    // ===== Analytics =====
+    float startTime;
+    int moveCount = 0;
+    string puzzleID = "maze_rule_shift";
+
     // ===== Level 1 map =====
     int[,] map = new int[20, 20]
     {
@@ -56,6 +61,15 @@ public class MazeGame : MonoBehaviour
         tex = new Texture2D(COLS * TILE, ROWS * TILE);
         tex.filterMode = FilterMode.Point;
         mazeImage.texture = tex;
+
+        // ===== Puzzle Enter Event =====
+        startTime = Time.time;
+        moveCount = 0;
+
+        AnalyticsManager.LogEvent("puzzle_enter", new {
+            puzzle_id = puzzleID
+        });
+
         Draw();
     }
 
@@ -66,6 +80,7 @@ public class MazeGame : MonoBehaviour
         // ===== Exit maze =====
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            LogExit();
             ExitMaze();
             return;
         }
@@ -86,6 +101,7 @@ public class MazeGame : MonoBehaviour
 
         if (dx != 0 || dy != 0)
         {
+            moveCount++;   // 记录一次 attempt
             TryMove(dx, dy);
             Draw();
         }
@@ -93,6 +109,17 @@ public class MazeGame : MonoBehaviour
         {
             Draw();
         }
+    }
+
+    void LogExit()
+    {
+        float duration = Time.time - startTime;
+
+        AnalyticsManager.LogEvent("puzzle_exit", new {
+            puzzle_id = puzzleID,
+            moves = moveCount,
+            time_spent = duration
+        });
     }
 
     void ExitMaze()
@@ -130,7 +157,13 @@ public class MazeGame : MonoBehaviour
         if (solved) return;
         solved = true;
 
-        Debug.Log("Maze solved!");
+        float duration = Time.time - startTime;
+
+        AnalyticsManager.LogEvent("puzzle_complete", new {
+            puzzle_id = puzzleID,
+            moves = moveCount,
+            time_spent = duration
+        });
 
         MazeProgress.mazeSolved = true;
 
