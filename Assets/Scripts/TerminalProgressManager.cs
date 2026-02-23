@@ -4,6 +4,8 @@ using TMPro;
 public class TerminalProgressManager : MonoBehaviour
 {
     public static TerminalProgressManager Instance { get; private set; }
+    [Header("Dialogue")]
+    public DialogueUI dialogueUI;
 
     [Header("3 Computers")]
     public TerminalInteractable[] targetComputers; // 3 台电脑拖进来
@@ -68,11 +70,26 @@ public class TerminalProgressManager : MonoBehaviour
         {
             hasTriggeredMove = true;
 
+            // ===== 1️⃣ 物体移动 =====
             if (object1 != null)
                 object1.position += new Vector3(0.3f, 0f, 0f);
 
             if (object2 != null)
                 object2.position += new Vector3(0.3f, 0f, 0f);
+
+            // ===== 2️⃣ 触发 Dialogue =====
+            if (dialogueUI != null)
+            {
+                string[] lines = new string[]
+                {
+                    "Something just popped out...",
+                    "Is that... a key?",
+                    "There was a locked door in Lab 1.",
+                    "Maybe this opens it."
+                };
+
+                dialogueUI.StartDialogue(lines);
+            }
         }
     }
 }
