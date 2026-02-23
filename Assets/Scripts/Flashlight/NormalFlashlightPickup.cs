@@ -7,6 +7,7 @@ public class NormalFlashlightPickup : MonoBehaviour
     [Header("Inventory Info")]
     public string itemId = "Flashlight";
     public Sprite icon;
+    public DialogueUI dialogueUI;
 
     public void Interact()
     {
@@ -29,6 +30,15 @@ public class NormalFlashlightPickup : MonoBehaviour
         if (inventory != null)
         {
             inventory.Add(itemId, icon);
+        }
+
+        // Flashlight pickup
+        if (itemId == "Flashlight" && dialogueUI != null)
+        {
+            dialogueUI.StartDialogue(new string[]
+            {
+                "Here is a flashlight..."
+            });
         }
 
         // ===== 3️⃣ 销毁场景物体 =====

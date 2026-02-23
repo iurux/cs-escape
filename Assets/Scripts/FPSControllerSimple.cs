@@ -193,15 +193,6 @@ public class FPSControllerSimple : MonoBehaviour
                     });
                 }
 
-                // Flashlight pickup
-                if (itemId == "Flashlight" && dialogueUI != null)
-                {
-                    dialogueUI.StartDialogue(new string[]
-                    {
-                        "Here is a flashlight..."
-                    });
-                }
-
                 // Pen pickup
                 if (itemId == "Pen" && dialogueUI != null)
                 {
@@ -216,7 +207,7 @@ public class FPSControllerSimple : MonoBehaviour
                 {
                     dialogueUI.StartDialogue(new string[]
                     {
-                        "Here is my water laptop...",
+                        "Here is my laptop...",
                         "Why is it even here..."
                     });
                 }

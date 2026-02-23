@@ -25213,6 +25213,7 @@ MonoBehaviour:
   playerFlashlightObject: {fileID: 1626416986}
   itemId: Flashlight
   icon: {fileID: 0}
+  dialogueUI: {fileID: 0}
 --- !u!4 &1254139523 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8374330514089192982, guid: 26a2420e41111fa4384c8adc35b250b1, type: 3}
@@ -34363,6 +34364,7 @@ MonoBehaviour:
   playerFlashlightObject: {fileID: 1389990602}
   itemId: Flashlight
   icon: {fileID: 0}
+  dialogueUI: {fileID: 1665245401}
 --- !u!1 &1630373156
 GameObject:
   m_ObjectHideFlags: 0
