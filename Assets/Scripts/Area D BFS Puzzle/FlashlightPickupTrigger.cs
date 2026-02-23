@@ -6,19 +6,22 @@ public class FlashlightPickupTrigger : MonoBehaviour
     public GameObject guideHUD;
 
     [Header("Inventory Settings")]
-    public string itemId = "UV Light"; // ÀÎº¥Åä¸®¿ë ID
-    public Sprite itemIcon;          // ÀÎº¥Åä¸®¿¡ Ç¥½ÃµÉ ÀÌ¹ÌÁö
+    public string itemId = "UV Light";
+    public Sprite itemIcon;
+
+    [Header("Dialogue")]
+    public DialogueUI dialogueUI;   // æ‹–è¿› Inspector
 
     public void Interact()
     {
-        // 1. ÀÎº¥Åä¸®¿¡ Ãß°¡ (Ãß°¡µÈ ºÎºĞ)
+        // ===== 1ï¸âƒ£ åŠ å…¥ Inventory =====
         InventorySimple inv = FindObjectOfType<InventorySimple>();
         if (inv != null)
         {
             inv.Add(itemId, itemIcon);
         }
 
-        // 2. ÇÃ·¹ÀÌ¾î ¼ÕÀÇ ¼ÕÀüµî È°¼ºÈ­ (±âÁ¸ ·ÎÁ÷)
+        // ===== 2ï¸âƒ£ æ¿€æ´»ç©å®¶ UV æ‰‹ç”µ =====
         if (playerFlashlightHolder != null)
         {
             playerFlashlightHolder.SetActive(true);
@@ -27,12 +30,27 @@ public class FlashlightPickupTrigger : MonoBehaviour
             if (uv != null)
             {
                 uv.isPickedUp = true;
-                uv.canUseInArea = true; 
+                uv.canUseInArea = true;
             }
         }
 
-        if (guideHUD != null) guideHUD.SetActive(true);
-        
+        // ===== 3ï¸âƒ£ æ˜¾ç¤º Guide HUD =====
+        if (guideHUD != null)
+            guideHUD.SetActive(true);
+
+        // ===== 4ï¸âƒ£ è§¦å‘ Dialogue =====
+        if (dialogueUI != null)
+        {
+            string[] lines = new string[]
+            {
+                "Is this... a UV light?",
+                "Maybe I can use it to reveal something hidden..."
+            };
+
+            dialogueUI.StartDialogue(lines);
+        }
+
+        // ===== 5ï¸âƒ£ åˆ é™¤åœºæ™¯ç‰©ä½“ =====
         Destroy(gameObject);
     }
 }
