@@ -40,7 +40,7 @@ git rm -rf . > /dev/null 2>&1 || true
 
 # 6️⃣ 复制新 build
 echo "📦 Copying new build..."
-cp -r ../$BUILD_DIR/* .
+cp -r $BUILD_DIR/* .
 
 # 7️⃣ 提交并 push
 git add .
