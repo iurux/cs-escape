@@ -4,11 +4,15 @@ public class NormalFlashlightPickup : MonoBehaviour
 {
     public GameObject playerFlashlightObject;
 
+    [Header("Inventory Info")]
+    public string itemId = "Flashlight";
+    public Sprite icon;
+
     public void Interact()
     {
+        // ===== 1ï¸âƒ£ æ¿€æ´»ç©å®¶æ‰‹ç”µç­’ =====
         if (playerFlashlightObject != null)
         {
-            // ºÎ¸ğ(Holder)°¡ ²¨Á®ÀÖÀ» ¼ö ÀÖÀ¸¹Ç·Î ºÎ¸ğºÎÅÍ È°¼ºÈ­
             playerFlashlightObject.transform.parent.gameObject.SetActive(true);
             playerFlashlightObject.SetActive(true);
 
@@ -16,10 +20,18 @@ public class NormalFlashlightPickup : MonoBehaviour
             if (nf != null)
             {
                 nf.isPickedUp = true;
-                // Áİ´Â ¼ø°£ ºÒÀÌ ²¨Á®ÀÖµµ·Ï ¸í½ÃÀûÀ¸·Î È£Ãâ
-                nf.enabled = true; 
+                nf.enabled = true;
             }
         }
+
+        // ===== 2ï¸âƒ£ åŠ å…¥ Inventory =====
+        InventorySimple inventory = FindObjectOfType<InventorySimple>();
+        if (inventory != null)
+        {
+            inventory.Add(itemId, icon);
+        }
+
+        // ===== 3ï¸âƒ£ é”€æ¯åœºæ™¯ç‰©ä½“ =====
         Destroy(gameObject);
     }
 }
