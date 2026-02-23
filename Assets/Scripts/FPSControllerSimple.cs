@@ -133,7 +133,6 @@ public class FPSControllerSimple : MonoBehaviour
                 // flashlight logic
                 FlashlightPickupTrigger uvPickup = hit.collider.GetComponent<FlashlightPickupTrigger>() ?? 
                                          hit.collider.GetComponentInParent<FlashlightPickupTrigger>();
-        
                 if (uvPickup != null) {
                     uvPickup.Interact();
                     return; 
@@ -141,9 +140,16 @@ public class FPSControllerSimple : MonoBehaviour
 
                 NormalFlashlightPickup normalPickup = hit.collider.GetComponent<NormalFlashlightPickup>() ?? 
                                              hit.collider.GetComponentInParent<NormalFlashlightPickup>();
-
                 if (normalPickup != null) { 
                     normalPickup.Interact(); 
+                    return; 
+                }
+
+                EmptyCupPickup cupPickup = hit.collider.GetComponent<EmptyCupPickup>() ?? 
+                                           hit.collider.GetComponentInParent<EmptyCupPickup>();
+                if (cupPickup != null) 
+                { 
+                    cupPickup.Interact(); 
                     return; 
                 }
 
@@ -233,6 +239,16 @@ public class FPSControllerSimple : MonoBehaviour
                         Cursor.visible = true;
                         return;
                     }
+                }
+
+                // ③ Water dispenser interaction (snackoverflow puzzle)
+                WaterDispenserInteract dispenser = hit.collider.GetComponent<WaterDispenserInteract>() ??
+                                                   hit.collider.GetComponentInParent<WaterDispenserInteract>();
+                
+                if (dispenser != null)
+                {
+                    dispenser.Interact(); // 정수기의 Interact() 함수를 호출하여 물을 채움
+                    return;
                 }
 
                 // === Terminal Computer (Area A) ===
