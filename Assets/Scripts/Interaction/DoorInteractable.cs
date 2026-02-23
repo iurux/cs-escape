@@ -12,7 +12,8 @@ public class DoorInteractable : MonoBehaviour
     {
         None,
         RequiresItem,
-        RequiresCardReaderAccess
+        RequiresCardReaderAccess,
+        RequiresFlashlight     // ✅ 新增
     }
 
     [Header("Requirement")]
@@ -20,12 +21,18 @@ public class DoorInteractable : MonoBehaviour
 
     // === Item Requirement ===
     public string requiredItemId = "Student Card";
-    public string failDialogue = "I forget to pickup my student ID card";
+    public string failDialogue = "I forgot to pick up my student ID card.";
 
     // === Card Reader Requirement ===
     [Header("Card Reader")]
-    public CardReaderInteractable cardReader;  // ✅ 新增：拖拽门旁读卡器进来
+    public CardReaderInteractable cardReader;
     public string needSwipeDialogue = "I need to use the card reader first.";
+
+    // === Flashlight Requirement ===
+    [Header("Flashlight Requirement")]
+    public string flashlightItemId = "Flashlight";
+    public string tooDarkDialogue =
+        "It's too dark inside...\nI can't see anything without some light.";
 
     bool isOpen = false;
     bool isAnimating = false;
@@ -35,7 +42,9 @@ public class DoorInteractable : MonoBehaviour
 
     void Awake()
     {
-        if (doorToRotate == null) doorToRotate = transform;
+        if (doorToRotate == null)
+            doorToRotate = transform;
+
         closedRot = doorToRotate.localRotation;
         openRot = closedRot * Quaternion.Euler(0f, openAngleY, 0f);
     }
@@ -45,6 +54,8 @@ public class DoorInteractable : MonoBehaviour
         if (isAnimating) return;
 
         // ===== 条件检查 =====
+
+        // 1️⃣ 需要普通物品
         if (requirement == RequirementType.RequiresItem)
         {
             if (inv == null || !inv.Has(requiredItemId))
@@ -54,11 +65,26 @@ public class DoorInteractable : MonoBehaviour
             }
         }
 
+        // 2️⃣ 需要刷卡
         if (requirement == RequirementType.RequiresCardReaderAccess)
         {
             if (cardReader == null || !cardReader.accessGranted)
             {
                 dialogueUI?.StartDialogue(new string[] { needSwipeDialogue });
+                return;
+            }
+        }
+
+        // 3️⃣ 需要手电筒
+        if (requirement == RequirementType.RequiresFlashlight)
+        {
+            if (inv == null || !inv.Has(flashlightItemId))
+            {
+                dialogueUI?.StartDialogue(new string[]
+                {
+                    "It's too dark inside...",
+                    "I can't see anything without some light."
+                });
                 return;
             }
         }
@@ -78,7 +104,8 @@ public class DoorInteractable : MonoBehaviour
         while (t < 1f)
         {
             t += Time.deltaTime * openSpeed;
-            doorToRotate.localRotation = Quaternion.Slerp(start, target, t);
+            doorToRotate.localRotation =
+                Quaternion.Slerp(start, target, t);
             yield return null;
         }
 

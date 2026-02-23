@@ -4391,6 +4391,11 @@ MonoBehaviour:
   failDialogue: I can't go in this room
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!1 &236084139
 GameObject:
   m_ObjectHideFlags: 0
@@ -6016,6 +6021,11 @@ MonoBehaviour:
   failDialogue: I forget to pickup my student ID card
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!65 &297735028
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10385,6 +10395,11 @@ MonoBehaviour:
   failDialogue: 
   cardReader: {fileID: 1913147970}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!4 &508981788 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6607067672067829289, guid: eba40b33cd75dfc4e86e9604170d19f9, type: 3}
@@ -16285,6 +16300,11 @@ MonoBehaviour:
   failDialogue: I forget to pickup my student card
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!1 &766511474 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1968155112565690, guid: 8938ad57525142549a65f9a4b0768bed, type: 3}
@@ -17784,6 +17804,11 @@ MonoBehaviour:
   failDialogue: I forget to pickup my student ID card
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!65 &839858206
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20144,6 +20169,11 @@ MonoBehaviour:
   failDialogue: I forget to pickup my student ID card
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!4 &981741824 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2068398726653781473, guid: e0a309163f5d1ef4e81367371dba0804, type: 3}
@@ -20504,11 +20534,16 @@ MonoBehaviour:
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
-  requirement: 0
+  requirement: 3
   requiredItemId: student card
   failDialogue: I forget to pickup my student ID card
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!1001 &1016752460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21457,6 +21492,11 @@ MonoBehaviour:
   failDialogue: I forget to pickup my student ID card
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!4 &1060639016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6276409764197313900, guid: fd9a0b6c96158cf4291ea793dcd09c5e, type: 3}
@@ -25036,6 +25076,11 @@ MonoBehaviour:
   failDialogue: I need to find a key for this room
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!1001 &1283859632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27498,6 +27543,11 @@ MonoBehaviour:
   failDialogue: I can't go in to this restroom
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!1 &1374273367
 GameObject:
   m_ObjectHideFlags: 0
@@ -28796,6 +28846,11 @@ MonoBehaviour:
   failDialogue: It closed for maintenance
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!65 &1411159604
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32829,6 +32884,11 @@ MonoBehaviour:
   failDialogue: I forget to pickup my student ID card
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!65 &1595336271
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36056,6 +36116,11 @@ MonoBehaviour:
   failDialogue: I can't go in this room
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!1001 &1711176294
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37750,6 +37815,11 @@ MonoBehaviour:
   failDialogue: I can't go in this room
   cardReader: {fileID: 0}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!1 &1820710666
 GameObject:
   m_ObjectHideFlags: 0
@@ -39630,6 +39700,11 @@ MonoBehaviour:
   failDialogue: 
   cardReader: {fileID: 1913147970}
   needSwipeDialogue: I need to use the card reader first.
+  flashlightItemId: Flashlight
+  tooDarkDialogue: 'It''s too dark inside...
+
+    I can''t see anything without some
+    light.'
 --- !u!4 &1922217475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 42571002559480346, guid: 57addd97d1055424daebeb70d461be6d, type: 3}
