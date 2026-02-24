@@ -18,6 +18,9 @@ public class CircuitPuzzleManager : MonoBehaviour
     [Header("Screen Feedback")]
     public GameObject screenFlicker;
 
+    [Header("Analytics")]
+    public PuzzleTracker tracker;
+
     private List<PipeRotator> allPipes = new List<PipeRotator>();
 
     private void Start()
@@ -43,6 +46,8 @@ public class CircuitPuzzleManager : MonoBehaviour
         if (IsSolved) return; // Do not reopen if already completed
 
         puzzleCanvasPanel.SetActive(true);
+
+        tracker.EnterPuzzle();
         
         // Unlock cursor for UI interaction
         Cursor.lockState = CursorLockMode.None;
@@ -71,6 +76,7 @@ public class CircuitPuzzleManager : MonoBehaviour
 
     private void OnPuzzleSolved()
     {
+        tracker.Attempt(true);
         Debug.Log("Puzzle Solved! Power Restoring...");
         IsSolved = true;
 

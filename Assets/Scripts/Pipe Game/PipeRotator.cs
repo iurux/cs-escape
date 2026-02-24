@@ -39,6 +39,9 @@ public class PipeRotator : MonoBehaviour, IPointerClickHandler
         rectTransform.Rotate(0, 0, -90f);
         
         CheckCorrection();
+
+        if (puzzleManager.tracker != null)
+            puzzleManager.tracker.Attempt(false);
         
         // Notify the manager to check if the whole puzzle is solved
         puzzleManager.CheckWinCondition(); 

@@ -28589,6 +28589,7 @@ GameObject:
   - component: {fileID: 1331489799}
   - component: {fileID: 1331489798}
   - component: {fileID: 1331489800}
+  - component: {fileID: 1331489801}
   m_Layer: 5
   m_Name: MazePanel
   m_TagString: Untagged
@@ -28671,6 +28672,21 @@ MonoBehaviour:
   mazeCanvas: {fileID: 122113817}
   studentCard: {fileID: 866672497}
   screenFlicker: {fileID: 1591824008}
+  tracker: {fileID: 1331489801}
+--- !u!114 &1331489801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331489796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e380e38a572c41ec8da4cba583d9758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzleID: maze
+  roomID: lab1
 --- !u!1001 &1333224659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30630,7 +30646,7 @@ Light:
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 10
+  m_Intensity: 50
   m_Range: 60
   m_SpotAngle: 100
   m_InnerSpotAngle: 50
@@ -33331,8 +33347,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 19.367462, y: 5.867449, z: 19.416687}
-  m_Center: {x: -0.20211792, y: 2.1790094, z: -3.1091805}
+  m_Size: {x: 19.573387, y: 5.867449, z: 19.416687}
+  m_Center: {x: -0.30507994, y: 2.1790094, z: -3.1091805}
 --- !u!4 &1520236061
 Transform:
   m_ObjectHideFlags: 0
@@ -34110,6 +34126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1542845361}
   - component: {fileID: 1542845362}
+  - component: {fileID: 1542845363}
   m_Layer: 0
   m_Name: TerminalSystem
   m_TagString: Untagged
@@ -34156,6 +34173,21 @@ MonoBehaviour:
   progressText: {fileID: 1678540654}
   object1: {fileID: 579690804}
   object2: {fileID: 1667696690}
+  tracker: {fileID: 1542845363}
+--- !u!114 &1542845363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542845360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e380e38a572c41ec8da4cba583d9758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzleID: terminals
+  roomID: lab2
 --- !u!1001 &1545331339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40297,6 +40329,7 @@ GameObject:
   - component: {fileID: 1809996155}
   - component: {fileID: 1809996156}
   - component: {fileID: 1809996157}
+  - component: {fileID: 1809996158}
   m_Layer: 5
   m_Name: GridContainer
   m_TagString: Untagged
@@ -40381,6 +40414,21 @@ MonoBehaviour:
   closeButton: {fileID: 0}
   powerSystem: {fileID: 1644170834}
   screenFlicker: {fileID: 1591824008}
+  tracker: {fileID: 1809996158}
+--- !u!114 &1809996158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809996154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e380e38a572c41ec8da4cba583d9758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzleID: pipe
+  roomID: lab1
 --- !u!4 &1812012333 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3204423859770501514, guid: 3713613c4ffcd6945900432c53af79b8, type: 3}

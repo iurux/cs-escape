@@ -16,6 +16,8 @@ public class TerminalProgressManager : MonoBehaviour
     [Header("Objects To Move When All Solved")]
     public Transform object1;
     public Transform object2;
+    [Header("Analytics")]
+    public PuzzleTracker tracker;
 
     int solvedCount = 0;
     TerminalInteractable currentComputer;
@@ -69,6 +71,15 @@ public class TerminalProgressManager : MonoBehaviour
         if (solvedCount == 3 && !hasTriggeredMove)
         {
             hasTriggeredMove = true;
+
+            if (tracker != null)
+                tracker.Attempt(true);
+
+            if (object1 != null)
+                object1.position += new Vector3(0.3f, 0f, 0f);
+
+            if (object2 != null)
+                object2.position += new Vector3(0.3f, 0f, 0f);
 
             // ===== 1️⃣ 物体移动 =====
             if (object1 != null)

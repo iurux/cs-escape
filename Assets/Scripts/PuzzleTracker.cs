@@ -57,7 +57,7 @@ public class PuzzleTracker : MonoBehaviour
         }
     }
 
-    void CompletePuzzle()
+    public void CompletePuzzle()
     {
         float totalTime = Time.time - puzzleEnterTime;
 
