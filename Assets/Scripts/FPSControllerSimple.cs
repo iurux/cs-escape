@@ -29,12 +29,15 @@ public class FPSControllerSimple : MonoBehaviour
     public InventorySimple inventory;
     public DialogueUI dialogueUI;
     public CircuitPuzzleManager circuitPuzzle;
+    public TerminalUI terminalUI;
+    public MazeGame mazeGame; 
 
     float pitch;
     Vector3 vel;
     CharacterController cc;
     bool inventoryOpen;
     bool uiLock;
+    bool cursorUnlockedByESC = false;
 
     void Start()
     {
@@ -59,7 +62,15 @@ public class FPSControllerSimple : MonoBehaviour
 
     void Update()
     {
+        HandleEscape();
         HandleInventoryToggle();
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            cursorUnlockedByESC = false;
+        }
 
         if (inventoryOpen || uiLock || isReadingBook) return;
 
@@ -421,31 +432,17 @@ public class FPSControllerSimple : MonoBehaviour
 
     void OpenBookUI(string content)
     {
-        Debug.Log("OpenBookUI called");
-
-        if (bookCanvasPanel == null || bookContentText == null)
-        {
-            Debug.LogWarning("Book UI references missing: bookCanvasPanel / bookContentText");
-            return;
-        }
-
         isReadingBook = true;
 
-        // Pause world（也能兼容你之后别的暂停，比如 inventory）
         savedTimeScale = Time.timeScale;
         Time.timeScale = 0f;
 
-        // UI 显示
         bookCanvasPanel.SetActive(true);
-
-        // 不需要 title：直接显示内容即可
         bookContentText.text = content;
 
-        // 鼠标放开，方便玩家阅读
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
+        // 🔥 锁玩家控制
+        SetUILock(true);
 
-        // 隐藏交互提示
         interactPrompt.gameObject.SetActive(false);
 
         bookOpenedFrame = Time.frameCount;
@@ -457,12 +454,12 @@ public class FPSControllerSimple : MonoBehaviour
 
         isReadingBook = false;
 
-        if (bookCanvasPanel != null)
-            bookCanvasPanel.SetActive(false);
+        bookCanvasPanel.SetActive(false);
 
         Time.timeScale = savedTimeScale;
 
-        // 只对特定书触发
+        SetUILock(false);
+
         if (currentBook != null &&
             currentBook.triggerDialogueAfterReading &&
             dialogueUI != null)
@@ -484,10 +481,51 @@ public class FPSControllerSimple : MonoBehaviour
 
         // 防止同一帧按E打开又立刻触发关闭
         if (Time.frameCount == bookOpenedFrame) return;
+    }
 
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+    void HandleEscape()
+    {
+        if (!Keyboard.current.escapeKey.wasPressedThisFrame)
+            return;
+
+        // ① 读书中 → 关书
+        if (isReadingBook)
         {
             CloseBookUI();
+            return;
+        }
+
+        // ② Inventory 开着 → 关 Inventory
+        if (inventoryOpen)
+        {
+            inventoryOpen = false;
+            inventoryPanel.SetActive(false);
+            Time.timeScale = 1f;
+            return;
+        }
+
+        // ③ Puzzle 开着 → 关闭 Puzzle
+        if (circuitPuzzle != null &&
+            circuitPuzzle.puzzleCanvasPanel.activeSelf)
+        {
+            ClosePuzzleAndResumeGame();
+            return;
+        }
+
+        // ④ Terminal 开着 → 关 Terminal
+        if (terminalUI != null && terminalUI.IsOpen)
+        {
+            terminalUI.Close();
+            return;
+        }
+
+        // ④ 鼠标还锁着 → 只释放鼠标
+        if (!cursorUnlockedByESC)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            cursorUnlockedByESC = true;
+            return;
         }
     }
 

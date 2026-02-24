@@ -87,9 +87,6 @@ public class CircuitPuzzleManager : MonoBehaviour
         puzzleActive = false;  // 🔥 重置状态
 
         puzzleCanvasPanel.SetActive(false);
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     public void CheckWinCondition()

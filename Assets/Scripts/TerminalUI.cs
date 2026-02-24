@@ -17,6 +17,7 @@ public class TerminalUI : MonoBehaviour
     public Key closeKey = Key.Escape;
 
     bool isOpen;
+    public bool IsOpen => isOpen;
     string expectedAnswer;
     FPSControllerSimple currentPlayer; // 用于恢复鼠标/时间等（可选）
 
