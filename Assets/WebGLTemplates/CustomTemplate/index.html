@@ -26,20 +26,27 @@
           measurementId: "G-DYDJHQB0MP"
         };
 
+        // 初始化
         firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+        const analytics = firebase.analytics();
 
+        // 🔥 强制开启数据收集
+        analytics.setAnalyticsCollectionEnabled(true);
+
+        // 🔥 强制 debug 模式（关键）
+        window.gtag = window.gtag || function(){(window.dataLayer = window.dataLayer || []).push(arguments);}
+        gtag('config', firebaseConfig.measurementId, { debug_mode: true });
+
+        console.log("Firebase initialized with debug mode");
+
+        // Unity → Firebase 事件桥
         window.sendUnityEvent = function(eventName, jsonData) {
           try {
             const parsed = JSON.parse(jsonData);
 
-            firebase.analytics().logEvent(eventName, {
-              player_id: parsed.player_id || "",
-              session_id: parsed.session_id || "",
-              game_version: parsed.game_version || ""
-            });
+            analytics.logEvent(eventName, parsed);
 
-            console.log("Firebase Event Sent:", eventName);
+            console.log("Firebase Event Sent:", eventName, parsed);
 
           } catch (e) {
             console.error("Firebase Error:", e);
