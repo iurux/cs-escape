@@ -13,7 +13,18 @@ mergeInto(LibraryManager.library, {
         console.error("JSON parse error:", e);
     }
 
-    firebase.analytics().logEvent(eventName, data);
+    data.event_name = eventName;
+    data.server_timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+    firebase.firestore()
+        .collection("events")
+        .add(data)
+        .then(() => {
+            console.log("Event written:", eventName);
+        })
+        .catch((error) => {
+            console.error("Firestore write failed:", error);
+        });
   }
 
 });

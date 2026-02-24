@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ElevatorButtonInteract : MonoBehaviour
 {
@@ -37,9 +38,7 @@ public class ElevatorButtonInteract : MonoBehaviour
         {
             triggered = true;
 
-            // 🔥 记录 game_complete
             OnGameComplete();
-
             StartCoroutine(EndSequence());
         }
     }
@@ -50,17 +49,18 @@ public class ElevatorButtonInteract : MonoBehaviour
 
         int collectedCount = 0;
 
-        // 如果 ChecklistUI 有这个方法就用它
         if (checklistUI != null)
         {
             collectedCount = checklistUI.TotalCollectedCount();
         }
 
-        AnalyticsManager.LogEvent("game_complete", new GameCompleteData
-        {
-            total_time = totalTime,
-            total_items_collected = collectedCount
-        });
+        // 🔥 扁平结构记录
+        AnalyticsManager.LogEvent("game_complete",
+            new Dictionary<string, object>
+            {
+                { "total_time", totalTime },
+                { "total_items_collected", collectedCount }
+            });
 
         Debug.Log("Game Complete Logged");
     }
@@ -79,11 +79,4 @@ public class ElevatorButtonInteract : MonoBehaviour
 
         SceneManager.LoadScene("OpeningScene");
     }
-}
-
-[System.Serializable]
-public class GameCompleteData
-{
-    public float total_time;
-    public int total_items_collected;
 }

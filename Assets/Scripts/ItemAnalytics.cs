@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ItemAnalytics : MonoBehaviour
 {
@@ -6,19 +7,21 @@ public class ItemAnalytics : MonoBehaviour
 
     public void OnItemCollected()
     {
+        if (string.IsNullOrEmpty(itemID))
+        {
+            Debug.LogWarning("ItemAnalytics: itemID is empty.");
+            return;
+        }
+
         float timeSinceGameStart = Time.time - AnalyticsManager.gameStartTime;
 
-        AnalyticsManager.LogEvent("item_collected", new ItemData
-        {
-            item_id = itemID,
-            time_since_game_start = timeSinceGameStart
-        });
-    }
-}
+        AnalyticsManager.LogEvent("item_collected",
+            new Dictionary<string, object>
+            {
+                { "item_id", itemID },
+                { "time_since_game_start", timeSinceGameStart }
+            });
 
-[System.Serializable]
-public class ItemData
-{
-    public string item_id;
-    public float time_since_game_start;
+        Debug.Log("[Analytics] item_collected: " + itemID);
+    }
 }

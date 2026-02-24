@@ -1,42 +1,69 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class TerminalProgressManager : MonoBehaviour
 {
     public static TerminalProgressManager Instance { get; private set; }
+
     [Header("Dialogue")]
     public DialogueUI dialogueUI;
 
     [Header("3 Computers")]
-    public TerminalInteractable[] targetComputers; // 3 台电脑拖进来
+    public TerminalInteractable[] targetComputers;
 
     [Header("Progress Screen (4th)")]
-    public TMP_Text progressText; // 第4台屏幕上的 TMP_Text（显示 0/3）
+    public TMP_Text progressText;
 
     [Header("Objects To Move When All Solved")]
     public Transform object1;
     public Transform object2;
-    [Header("Analytics")]
-    public PuzzleTracker tracker;
+
+    // ===== Analytics =====
+    string puzzleID = "terminal_cluster_puzzle";
+    float puzzleStartTime;
+    bool puzzleActive = false;   // 🔥 只有真正进入才为 true
 
     int solvedCount = 0;
     TerminalInteractable currentComputer;
-    bool hasTriggeredMove = false; // 防止重复触发
+    bool hasTriggeredMove = false;
 
     void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
     }
 
     void Start()
     {
-        RefreshProgress();
+        RefreshProgress();   // ❌ 不再自动开始 puzzle
+    }
+
+    // 🔥 当玩家 interact 任意 terminal 时调用
+    public void OnTerminalAccessed()
+    {
+        if (puzzleActive) return;
+
+        puzzleActive = true;
+        puzzleStartTime = Time.time;
+
+        AnalyticsManager.LogEvent("puzzle_start",
+            new Dictionary<string, object>
+            {
+                { "puzzle_id", puzzleID }
+            });
     }
 
     public void SetCurrentComputer(TerminalInteractable computer)
     {
         currentComputer = computer;
+
+        // 🔥 第一次访问 terminal 时启动 puzzle
+        OnTerminalAccessed();
     }
 
     public void MarkCurrentComputerSolved()
@@ -45,8 +72,16 @@ public class TerminalProgressManager : MonoBehaviour
         if (currentComputer.IsSolved) return;
 
         currentComputer.MarkSolved();
+
         solvedCount = CountSolved();
         RefreshProgress();
+
+        AnalyticsManager.LogEvent("terminal_solved",
+            new Dictionary<string, object>
+            {
+                { "puzzle_id", puzzleID },
+                { "solved_count", solvedCount }
+            });
 
         CheckAllSolved();
     }
@@ -55,8 +90,10 @@ public class TerminalProgressManager : MonoBehaviour
     {
         int c = 0;
         if (targetComputers == null) return 0;
+
         foreach (var t in targetComputers)
             if (t != null && t.IsSolved) c++;
+
         return c;
     }
 
@@ -72,8 +109,15 @@ public class TerminalProgressManager : MonoBehaviour
         {
             hasTriggeredMove = true;
 
-            if (tracker != null)
-                tracker.Attempt(true);
+            float duration = Time.time - puzzleStartTime;
+
+            AnalyticsManager.LogEvent("puzzle_complete",
+                new Dictionary<string, object>
+                {
+                    { "puzzle_id", puzzleID },
+                    { "duration", duration },
+                    { "total_terminals", 3 }
+                });
 
             if (object1 != null)
                 object1.position += new Vector3(0.3f, 0f, 0f);
@@ -81,14 +125,6 @@ public class TerminalProgressManager : MonoBehaviour
             if (object2 != null)
                 object2.position += new Vector3(0.3f, 0f, 0f);
 
-            // ===== 1️⃣ 物体移动 =====
-            if (object1 != null)
-                object1.position += new Vector3(0.3f, 0f, 0f);
-
-            if (object2 != null)
-                object2.position += new Vector3(0.3f, 0f, 0f);
-
-            // ===== 2️⃣ 触发 Dialogue =====
             if (dialogueUI != null)
             {
                 string[] lines = new string[]

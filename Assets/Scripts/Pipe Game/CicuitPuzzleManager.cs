@@ -6,11 +6,11 @@ using System.Collections;
 public class CircuitPuzzleManager : MonoBehaviour
 {
     [Header("UI References")]
-    public GameObject puzzleCanvasPanel; // The entire UI panel for the minigame
-    public Button closeButton;           // Optional: Button to exit the puzzle
+    public GameObject puzzleCanvasPanel;
+    public Button closeButton;
 
     [Header("System References")]
-    public PowerSystem powerSystem;      // Reference to the 3D lighting system
+    public PowerSystem powerSystem;
 
     [Header("Status")]
     public bool IsSolved { get; private set; } = false;
@@ -18,92 +18,119 @@ public class CircuitPuzzleManager : MonoBehaviour
     [Header("Screen Feedback")]
     public GameObject screenFlicker;
 
-    [Header("Analytics")]
-    public PuzzleTracker tracker;
+    // ===== Analytics =====
+    float puzzleStartTime;
+    int attemptCount = 0;
+    string puzzleID = "circuit_puzzle";
+    bool puzzleActive = false;   // 🔥 关键修复
 
     private List<PipeRotator> allPipes = new List<PipeRotator>();
 
     private void Start()
     {
-        // Find all pipe scripts under this object
         PipeRotator[] pipes = GetComponentsInChildren<PipeRotator>();
         foreach (var pipe in pipes)
         {
             allPipes.Add(pipe);
-            pipe.RandomizeRotation(); // Scramble the puzzle on start
+            pipe.RandomizeRotation();
         }
 
         if (closeButton != null)
             closeButton.onClick.AddListener(ClosePuzzle);
 
-        // Ensure puzzle is hidden at game start
         puzzleCanvasPanel.SetActive(false);
     }
 
-    // Call this method from your Player Interaction script
     public void OpenPuzzle()
     {
-        if (IsSolved) return; // Do not reopen if already completed
+        if (IsSolved) return;
 
         puzzleCanvasPanel.SetActive(true);
 
-        tracker.EnterPuzzle();
-        
-        // Unlock cursor for UI interaction
+        puzzleStartTime = Time.time;
+        attemptCount = 0;
+        puzzleActive = true;   // 🔥 标记已开始
+
+        AnalyticsManager.LogEvent("puzzle_start",
+            new Dictionary<string, object>
+            {
+                { "puzzle_id", puzzleID }
+            });
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
     public void ClosePuzzle()
     {
+        if (puzzleActive && !IsSolved)
+        {
+            float duration = Time.time - puzzleStartTime;
+
+            AnalyticsManager.LogEvent("puzzle_exit",
+                new Dictionary<string, object>
+                {
+                    { "puzzle_id", puzzleID },
+                    { "attempts", attemptCount },
+                    { "duration", duration }
+                });
+        }
+
+        puzzleActive = false;  // 🔥 重置状态
+
         puzzleCanvasPanel.SetActive(false);
 
-        // Lock cursor back to FPS mode
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     public void CheckWinCondition()
     {
+        if (!puzzleActive) return;  // 🔥 防止异常调用
+
+        attemptCount++;
+
         foreach (var pipe in allPipes)
         {
-            if (!pipe.IsCorrect()) return; // If even one pipe is wrong, stop checking
+            if (!pipe.IsCorrect()) return;
         }
 
-        // If loop finishes, all pipes are correct
         OnPuzzleSolved();
     }
 
     private void OnPuzzleSolved()
     {
-        tracker.Attempt(true);
-        Debug.Log("Puzzle Solved! Power Restoring...");
+        if (IsSolved) return;
+
         IsSolved = true;
+        puzzleActive = false;  // 🔥 结束状态
+
+        float duration = Time.time - puzzleStartTime;
+
+        AnalyticsManager.LogEvent("puzzle_complete",
+            new Dictionary<string, object>
+            {
+                { "puzzle_id", puzzleID },
+                { "attempts", attemptCount },
+                { "duration", duration }
+            });
 
         if (screenFlicker != null)
             screenFlicker.SetActive(true);
 
-        // Disable interaction on all pipes so they can't be rotated anymore
         foreach (var pipe in allPipes)
-        {
-            // If your PipeRotator has a way to disable clicking, do it here
-            pipe.enabled = false; 
-        }
+            pipe.enabled = false;
 
-        // Wait 0.5 seconds so the player sees the connected lines, then finish
         StartCoroutine(WinSequence());
     }
 
     private IEnumerator WinSequence()
     {
         yield return new WaitForSeconds(0.5f);
-        
-        if (powerSystem != null) 
-        {
+
+        if (powerSystem != null)
             powerSystem.RestorePower();
-        }
-        
-        // Find the player controller and call the resume function we created
+
         FPSControllerSimple player = FindObjectOfType<FPSControllerSimple>();
         if (player != null)
         {
@@ -111,7 +138,6 @@ public class CircuitPuzzleManager : MonoBehaviour
         }
         else
         {
-            // Fallback if player script is not found
             ClosePuzzle();
         }
     }

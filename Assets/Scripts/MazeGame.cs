@@ -13,7 +13,6 @@ public class MazeGame : MonoBehaviour
 
     [Header("Screen Feedback")]
     public GameObject screenFlicker;
-    public PuzzleTracker tracker;
 
     // ===== Maze settings =====
     const int TILE = 16;
@@ -26,6 +25,11 @@ public class MazeGame : MonoBehaviour
     Vector2Int player = new Vector2Int(1, 1);
     int rule = 1;
     bool solved = false;
+
+    // ===== Analytics =====
+    float startTime;
+    int moveCount = 0;
+    string puzzleID = "maze_rule_shift";
 
     // ===== Level 1 map =====
     int[,] map = new int[20, 20]
@@ -54,14 +58,23 @@ public class MazeGame : MonoBehaviour
 
     void Start()
     {
-        tracker = GetComponent<PuzzleTracker>(); 
         tex = new Texture2D(COLS * TILE, ROWS * TILE);
         tex.filterMode = FilterMode.Point;
         mazeImage.texture = tex;
 
-        tracker.EnterPuzzle();
-
         Draw();
+    }
+
+    void OnEnable()
+    {
+        startTime = Time.time;
+        moveCount = 0;
+
+        AnalyticsManager.LogEvent("puzzle_start",
+            new System.Collections.Generic.Dictionary<string, object>
+            {
+                { "puzzle_id", puzzleID }
+            });
     }
 
     void Update()
@@ -71,6 +84,7 @@ public class MazeGame : MonoBehaviour
         // ===== Exit maze =====
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            LogExit();
             ExitMaze();
             return;
         }
@@ -91,14 +105,27 @@ public class MazeGame : MonoBehaviour
 
         if (dx != 0 || dy != 0)
         {
+            moveCount++;   // 记录一次 attempt
             TryMove(dx, dy);
-            tracker.Attempt(false);
             Draw();
         }
         else if (ruleChanged)
         {
             Draw();
         }
+    }
+
+    void LogExit()
+    {
+        float duration = Time.time - startTime;
+
+        AnalyticsManager.LogEvent("puzzle_exit",
+            new System.Collections.Generic.Dictionary<string, object>
+            {
+                { "puzzle_id", puzzleID },
+                { "moves", moveCount },
+                { "time_spent", duration }
+            });
     }
 
     void ExitMaze()
@@ -136,8 +163,15 @@ public class MazeGame : MonoBehaviour
         if (solved) return;
         solved = true;
 
-        tracker.Attempt(true); 
-        tracker.CompletePuzzle();  
+        float duration = Time.time - startTime;
+
+        AnalyticsManager.LogEvent("puzzle_complete",
+            new System.Collections.Generic.Dictionary<string, object>
+            {
+                { "puzzle_id", puzzleID },
+                { "moves", moveCount },
+                { "time_spent", duration }
+            });
 
         MazeProgress.mazeSolved = true;
 

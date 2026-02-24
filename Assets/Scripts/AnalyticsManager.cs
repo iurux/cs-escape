@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -20,11 +21,8 @@ public class AnalyticsManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("=== AnalyticsManager Awake CALLED ===");
-
         if (Instance != null)
         {
-            Debug.Log("AnalyticsManager already exists. Destroying duplicate.");
             Destroy(gameObject);
             return;
         }
@@ -32,123 +30,90 @@ public class AnalyticsManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        Debug.Log("AnalyticsManager initialized and marked DontDestroyOnLoad.");
-
         InitializePlayer();
         StartSession();
     }
 
     void InitializePlayer()
     {
-        Debug.Log("Initializing Player...");
-
         if (!PlayerPrefs.HasKey("player_id"))
         {
             string newID = Guid.NewGuid().ToString();
             PlayerPrefs.SetString("player_id", newID);
             PlayerPrefs.Save();
-            Debug.Log("New player_id generated: " + newID);
-        }
-        else
-        {
-            Debug.Log("Existing player_id found.");
         }
 
         playerID = PlayerPrefs.GetString("player_id");
         gameVersion = Application.version;
-
-        Debug.Log("PlayerID: " + playerID);
-        Debug.Log("GameVersion: " + gameVersion);
     }
 
     void StartSession()
     {
-        Debug.Log("Starting Session...");
-
         sessionID = Guid.NewGuid().ToString();
         sessionStartTime = Time.time;
         gameStartTime = Time.time;
 
-        Debug.Log("SessionID: " + sessionID);
-        Debug.Log("Session start time: " + sessionStartTime);
-
-        LogEvent("session_start", new SessionData
-        {
-            session_id = sessionID
-        });
+        LogEvent("session_start", new Dictionary<string, object>());
     }
 
     void OnApplicationQuit()
     {
-        Debug.Log("Application quitting. Sending session_end.");
-
         float totalPlayTime = Time.time - sessionStartTime;
 
-        LogEvent("session_end", new SessionEndData
+        LogEvent("session_end", new Dictionary<string, object>
         {
-            session_id = sessionID,
-            total_play_time = totalPlayTime
+            { "total_play_time", totalPlayTime }
         });
     }
 
-    public static void LogEvent(string eventName, object data)
+    // 🔥 核心函数
+    public static void LogEvent(string eventName, Dictionary<string, object> eventData)
     {
-        Debug.Log("Preparing to log event: " + eventName);
+        Dictionary<string, object> finalData = new Dictionary<string, object>();
 
-        WrappedData wrapped = WrapData(data);
-        string json = JsonUtility.ToJson(wrapped);
+        // 基础字段
+        finalData["event_name"] = eventName;
+        finalData["player_id"] = playerID;
+        finalData["session_id"] = sessionID;
+        finalData["game_version"] = gameVersion;
 
-        Debug.Log("Wrapped JSON: " + json);
+        // 追加自定义字段
+        if (eventData != null)
+        {
+            foreach (var kv in eventData)
+            {
+                finalData[kv.Key] = kv.Value;
+            }
+        }
+
+        string json = DictionaryToJson(finalData);
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-        Debug.Log("Sending event to JS (WebGL build).");
-
-        try
-        {
-            SendUnityAnalytics(eventName, json);
-            Debug.Log("SendUnityAnalytics called successfully.");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("SendUnityAnalytics FAILED: " + e.Message);
-        }
+        SendUnityAnalytics(eventName, json);
 #else
-        Debug.Log("[EDITOR MODE] Event simulated: " + eventName);
+        Debug.Log("[Analytics] " + json);
 #endif
     }
 
-    static WrappedData WrapData(object data)
+    // 🔥 简单 JSON 转换（支持 string/float/int/bool）
+    static string DictionaryToJson(Dictionary<string, object> dict)
     {
-        Debug.Log("Wrapping data for event...");
+        List<string> entries = new List<string>();
 
-        return new WrappedData
+        foreach (var kv in dict)
         {
-            player_id = playerID,
-            session_id = sessionID,
-            game_version = gameVersion,
-            payload = JsonUtility.ToJson(data)
-        };
+            string value;
+
+            if (kv.Value is string)
+                value = $"\"{kv.Value}\"";
+            else if (kv.Value is bool)
+                value = kv.Value.ToString().ToLower();
+            else
+                value = kv.Value.ToString();
+
+            entries.Add($"\"{kv.Key}\":{value}");
+        }
+
+        return "{" + string.Join(",", entries) + "}";
     }
-}
-
-[Serializable]
-public class WrappedData
-{
-    public string player_id;
-    public string session_id;
-    public string game_version;
-    public string payload;
-}
-
-[Serializable]
-public class SessionData
-{
-    public string session_id;
-}
-
-[Serializable]
-public class SessionEndData
-{
-    public string session_id;
-    public float total_play_time;
 }

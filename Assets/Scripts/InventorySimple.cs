@@ -17,7 +17,7 @@ public class InventorySimple : MonoBehaviour
     {
         if (string.IsNullOrEmpty(itemId)) return;
 
-        // 已有就不重复加
+        // 已有就不重复加（防止重复 analytics）
         if (!items.Add(itemId)) return;
 
         if (ui != null)
@@ -28,7 +28,7 @@ public class InventorySimple : MonoBehaviour
 
         Debug.Log("[Inventory] Add: " + itemId);
 
-        // 🔥 在这里统一记录 analytics
+        // 🔥 统一记录 analytics
         LogItemCollected(itemId);
     }
 
@@ -36,11 +36,12 @@ public class InventorySimple : MonoBehaviour
     {
         float timeSinceGameStart = Time.time - AnalyticsManager.gameStartTime;
 
-        AnalyticsManager.LogEvent("item_collected", new ItemData
-        {
-            item_id = itemId,
-            time_since_game_start = timeSinceGameStart
-        });
+        AnalyticsManager.LogEvent("item_collected",
+            new Dictionary<string, object>
+            {
+                { "item_id", itemId },
+                { "time_since_game_start", timeSinceGameStart }
+            });
 
         Debug.Log("[Analytics] item_collected sent: " + itemId);
     }
