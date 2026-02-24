@@ -14,12 +14,27 @@ public class ChecklistUI : MonoBehaviour
     {
         if (initialized) return;
 
+        if (checklistItems == null || checklistItems.Length == 0)
+        {
+            Debug.LogWarning("Checklist items not assigned!");
+            return;
+        }
+
         itemMap.Clear();
 
         foreach (var item in checklistItems)
         {
-            itemMap[item.GetItemId()] = item;
-            Debug.Log("Registered checklist key: " + item.GetItemId());
+            string id = item.GetItemId();
+
+            if (!itemMap.ContainsKey(id))
+            {
+                itemMap.Add(id, item);
+                Debug.Log("Registered checklist key: " + id);
+            }
+            else
+            {
+                Debug.LogWarning("Duplicate checklist id: " + id);
+            }
         }
 
         initialized = true;
@@ -33,17 +48,18 @@ public class ChecklistUI : MonoBehaviour
 
         if (itemMap.ContainsKey(itemId))
         {
-            Debug.Log("MATCH FOUND");
             itemMap[itemId].MarkCompleted();
         }
         else
         {
-            Debug.Log("NO MATCH");
+            Debug.LogWarning("Checklist item not found: " + itemId);
         }
     }
 
     void OnEnable()
     {
+        if (checklistItems == null) return;
+
         foreach (var item in checklistItems)
         {
             item.UpdateVisual();
@@ -56,11 +72,26 @@ public class ChecklistUI : MonoBehaviour
 
         foreach (var item in checklistItems)
         {
-            if (!item.IsCompleted())   // 需要下面补这个函数
+            if (!item.IsCompleted())
                 return false;
         }
 
         return true;
+    }
+
+    public int TotalCollectedCount()
+    {
+        InitializeIfNeeded();
+
+        int count = 0;
+
+        foreach (var item in checklistItems)
+        {
+            if (item.IsCompleted())
+                count++;
+        }
+
+        return count;
     }
 
     public void ResetAll()
@@ -69,23 +100,8 @@ public class ChecklistUI : MonoBehaviour
         {
             item.ResetItem();
         }
+
+        initialized = false;
+        itemMap.Clear();
     }
-
-
-    // int completedCount = 0;
-
-    // public void MarkCollected(string itemId)
-    // {
-    //     if (itemMap.ContainsKey(itemId))
-    //     {
-    //         itemMap[itemId].MarkCompleted();
-    //         completedCount++;
-
-    //         if (completedCount >= itemMap.Count)
-    //         {
-    //             Debug.Log("All items collected!");
-    //             // Trigger new dialogue here
-    //         }
-    //     }
-    // }
 }

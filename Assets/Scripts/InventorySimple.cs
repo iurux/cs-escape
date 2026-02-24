@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class InventorySimple : MonoBehaviour
 {
-    public InventoryUI ui; // 不拖也行，会自动找
+    public InventoryUI ui;
+    public ChecklistUI checklistUI;
 
     private HashSet<string> items = new HashSet<string>();
-
-    private void Start()
-    {
-    }
 
     public bool Has(string itemId)
     {
@@ -26,7 +23,25 @@ public class InventorySimple : MonoBehaviour
         if (ui != null)
             ui.AddItem(itemId, icon);
 
+        if (checklistUI != null)
+            checklistUI.MarkCollected(itemId);
+
         Debug.Log("[Inventory] Add: " + itemId);
 
+        // 🔥 在这里统一记录 analytics
+        LogItemCollected(itemId);
+    }
+
+    void LogItemCollected(string itemId)
+    {
+        float timeSinceGameStart = Time.time - AnalyticsManager.gameStartTime;
+
+        AnalyticsManager.LogEvent("item_collected", new ItemData
+        {
+            item_id = itemId,
+            time_since_game_start = timeSinceGameStart
+        });
+
+        Debug.Log("[Analytics] item_collected sent: " + itemId);
     }
 }

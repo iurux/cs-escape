@@ -16,6 +16,7 @@ public class AnalyticsManager : MonoBehaviour
     public static string gameVersion;
 
     private float sessionStartTime;
+    public static float gameStartTime;
 
     void Awake()
     {
@@ -66,6 +67,7 @@ public class AnalyticsManager : MonoBehaviour
 
         sessionID = Guid.NewGuid().ToString();
         sessionStartTime = Time.time;
+        gameStartTime = Time.time;
 
         Debug.Log("SessionID: " + sessionID);
         Debug.Log("Session start time: " + sessionStartTime);

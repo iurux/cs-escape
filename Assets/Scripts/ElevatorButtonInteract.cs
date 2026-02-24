@@ -10,37 +10,80 @@ public class ElevatorButtonInteract : MonoBehaviour
     public GameObject blackScreen;
     public GameObject endText;
 
-    bool triggered = false;
+    private bool triggered = false;
 
     public void Interact()
     {
         if (triggered) return;
 
+        if (checklistUI == null)
+        {
+            Debug.LogError("ChecklistUI not assigned!");
+            return;
+        }
+
         if (!checklistUI.AllCollected())
         {
-            dialogueUI.StartDialogue(new string[]
+            if (dialogueUI != null)
             {
-                "Something’s not right...",
-                "Better check the checklist again."
-            });
+                dialogueUI.StartDialogue(new string[]
+                {
+                    "Something’s not right...",
+                    "Better check the checklist again."
+                });
+            }
         }
         else
         {
             triggered = true;
+
+            // 🔥 记录 game_complete
+            OnGameComplete();
+
             StartCoroutine(EndSequence());
         }
     }
 
+    void OnGameComplete()
+    {
+        float totalTime = Time.time - AnalyticsManager.gameStartTime;
+
+        int collectedCount = 0;
+
+        // 如果 ChecklistUI 有这个方法就用它
+        if (checklistUI != null)
+        {
+            collectedCount = checklistUI.TotalCollectedCount();
+        }
+
+        AnalyticsManager.LogEvent("game_complete", new GameCompleteData
+        {
+            total_time = totalTime,
+            total_items_collected = collectedCount
+        });
+
+        Debug.Log("Game Complete Logged");
+    }
+
     IEnumerator EndSequence()
     {
-        blackScreen.SetActive(true);
+        if (blackScreen != null)
+            blackScreen.SetActive(true);
 
         yield return new WaitForSecondsRealtime(2f);
 
-        endText.SetActive(true);
+        if (endText != null)
+            endText.SetActive(true);
 
         yield return new WaitForSecondsRealtime(3f);
 
         SceneManager.LoadScene("OpeningScene");
     }
+}
+
+[System.Serializable]
+public class GameCompleteData
+{
+    public float total_time;
+    public int total_items_collected;
 }
