@@ -349,7 +349,32 @@ public class FPSControllerSimple : MonoBehaviour
                 ? CursorLockMode.None
                 : CursorLockMode.Locked;
             Cursor.visible = inventoryOpen;
+
+            // 🔥 只在“打开”时记录
+            if (inventoryOpen)
+            {
+                LogInventoryOpened();
+            }
         }
+    }
+
+    void LogInventoryOpened()
+    {
+        float timeSinceGameStart =
+            Time.time - AnalyticsManager.gameStartTime;
+
+        AnalyticsManager.LogEvent("inventory_open", new InventoryData
+        {
+            time_since_game_start = timeSinceGameStart
+        });
+
+        Debug.Log("[Analytics] inventory_open logged");
+    }
+
+    [System.Serializable]
+    public class InventoryData
+    {
+        public float time_since_game_start;
     }
 
     // Method to close the puzzle UI and resume player control
