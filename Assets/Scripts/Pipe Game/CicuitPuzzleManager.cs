@@ -21,6 +21,7 @@ public class CircuitPuzzleManager : MonoBehaviour
     // ===== Analytics =====
     float puzzleStartTime;
     int attemptCount = 0;
+    int totalRotateCount = 0;
     string puzzleID = "circuit_puzzle";
     bool puzzleActive = false;   // 🔥 关键修复
 
@@ -48,6 +49,7 @@ public class CircuitPuzzleManager : MonoBehaviour
         puzzleCanvasPanel.SetActive(true);
 
         puzzleStartTime = Time.time;
+        totalRotateCount = 0;
         attemptCount = 0;
         puzzleActive = true;   // 🔥 标记已开始
 
@@ -61,6 +63,12 @@ public class CircuitPuzzleManager : MonoBehaviour
         Cursor.visible = true;
     }
 
+    public void RegisterPipeRotation(PipeRotator pipe)
+    {
+        if (!puzzleActive) return;
+
+        totalRotateCount++;
+    }
     public void ClosePuzzle()
     {
         if (puzzleActive && !IsSolved)
@@ -112,7 +120,8 @@ public class CircuitPuzzleManager : MonoBehaviour
             {
                 { "puzzle_id", puzzleID },
                 { "attempts", attemptCount },
-                { "duration", duration }
+                { "duration", duration },
+                { "total_rotations", totalRotateCount } 
             });
 
         if (screenFlicker != null)

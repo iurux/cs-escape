@@ -22,7 +22,7 @@ public class TerminalProgressManager : MonoBehaviour
     // ===== Analytics =====
     string puzzleID = "terminal_cluster_puzzle";
     float puzzleStartTime;
-    bool puzzleActive = false;   // 🔥 只有真正进入才为 true
+    bool puzzleActive = false;
 
     int solvedCount = 0;
     TerminalInteractable currentComputer;
@@ -40,10 +40,9 @@ public class TerminalProgressManager : MonoBehaviour
 
     void Start()
     {
-        RefreshProgress();   // ❌ 不再自动开始 puzzle
+        RefreshProgress();
     }
 
-    // 🔥 当玩家 interact 任意 terminal 时调用
     public void OnTerminalAccessed()
     {
         if (puzzleActive) return;
@@ -61,11 +60,16 @@ public class TerminalProgressManager : MonoBehaviour
     public void SetCurrentComputer(TerminalInteractable computer)
     {
         currentComputer = computer;
-
-        // 🔥 第一次访问 terminal 时启动 puzzle
         OnTerminalAccessed();
     }
 
+    public void RegisterTerminalAttempt()
+    {
+        if (currentComputer == null) return;
+        if (currentComputer.IsSolved) return;
+
+        currentComputer.RegisterAttempt();
+    }
     public void MarkCurrentComputerSolved()
     {
         if (currentComputer == null) return;
@@ -76,11 +80,19 @@ public class TerminalProgressManager : MonoBehaviour
         solvedCount = CountSolved();
         RefreshProgress();
 
+        float timeSincePuzzleStart = Time.time - puzzleStartTime;
+        float timeSinceGameStart = Time.time - AnalyticsManager.gameStartTime;
+
+        // 🔥 每个 terminal 单独记录
         AnalyticsManager.LogEvent("terminal_solved",
             new Dictionary<string, object>
             {
                 { "puzzle_id", puzzleID },
-                { "solved_count", solvedCount }
+                { "terminal_id", currentComputer.terminalID },
+                { "solved_order", solvedCount },
+                { "attempts", currentComputer.GetAttemptCount() },
+                { "time_since_puzzle_start", timeSincePuzzleStart },
+                { "time_since_game_start", timeSinceGameStart }
             });
 
         CheckAllSolved();

@@ -29,7 +29,7 @@ public class MazeGame : MonoBehaviour
     // ===== Analytics =====
     float startTime;
     int moveCount = 0;
-    string puzzleID = "maze_rule_shift";
+    string puzzleID = "maze";
 
     // ===== Level 1 map =====
     int[,] map = new int[20, 20]

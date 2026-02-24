@@ -12,13 +12,14 @@ public class PipeRotator : MonoBehaviour, IPointerClickHandler
     private RectTransform rectTransform;
     private CircuitPuzzleManager puzzleManager;
 
+    private int rotateCount = 0;   // 🔥 记录单个pipe旋转次数
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         puzzleManager = GetComponentInParent<CircuitPuzzleManager>();
     }
 
-    // Called by manager to scramble puzzle
     public void RandomizeRotation()
     {
         float randomZ = Random.Range(0, 4) * 90f;
@@ -27,7 +28,6 @@ public class PipeRotator : MonoBehaviour, IPointerClickHandler
         CheckCorrection();
     }
 
-    // Mouse click on pipe
     public void OnPointerClick(PointerEventData eventData)
     {
         if (puzzleManager == null) return;
@@ -36,9 +36,13 @@ public class PipeRotator : MonoBehaviour, IPointerClickHandler
         // Rotate 90 degrees clockwise
         rectTransform.Rotate(0, 0, -90f);
 
+        rotateCount++;   // 🔥 单pipe计数
+
+        // 🔥 通知manager累计总旋转次数
+        puzzleManager.RegisterPipeRotation(this);
+
         CheckCorrection();
 
-        // Let manager handle attempt counting + win check
         puzzleManager.CheckWinCondition();
     }
 
@@ -65,5 +69,10 @@ public class PipeRotator : MonoBehaviour, IPointerClickHandler
     public bool IsCorrect()
     {
         return isPlacedCorrectly;
+    }
+
+    public int GetRotateCount()
+    {
+        return rotateCount;
     }
 }

@@ -12405,7 +12405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 536113707}
   - component: {fileID: 536113706}
-  - component: {fileID: 536113705}
+  - component: {fileID: 536113708}
   m_Layer: 0
   m_Name: Room_Tutorial
   m_TagString: Untagged
@@ -12413,19 +12413,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &536113705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536113704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f4e8f0a47c324949b89f83dc52a0083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomID: tutorialRoom
 --- !u!65 &536113706
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12462,6 +12449,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &536113708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536113704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4e8f0a47c324949b89f83dc52a0083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomID: tutorialRoom
 --- !u!4 &536886715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3204423859770501514, guid: 3713613c4ffcd6945900432c53af79b8, type: 3}
@@ -14417,6 +14417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 2016228579}
+  checklistUI: {fileID: 0}
 --- !u!1001 &595125369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28388,8 +28389,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1312274006}
-  - component: {fileID: 1312274005}
   - component: {fileID: 1312274004}
+  - component: {fileID: 1312274007}
   m_Layer: 0
   m_Name: Room_Shower
   m_TagString: Untagged
@@ -28418,19 +28419,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 13.875063, y: 8.252955, z: 8.490962}
   m_Center: {x: -3.6249762, y: 2.2925744, z: -1.9634361}
---- !u!114 &1312274005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312274003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f4e8f0a47c324949b89f83dc52a0083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomID: shower
 --- !u!4 &1312274006
 Transform:
   m_ObjectHideFlags: 0
@@ -28446,6 +28434,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1312274007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312274003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4e8f0a47c324949b89f83dc52a0083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomID: shower
 --- !u!4 &1312750876 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6607067672067829289, guid: eba40b33cd75dfc4e86e9604170d19f9, type: 3}
@@ -28759,7 +28760,6 @@ MonoBehaviour:
   mazeCanvas: {fileID: 122113817}
   studentCard: {fileID: 866672497}
   screenFlicker: {fileID: 1591824008}
-  tracker: {fileID: 1331489801}
 --- !u!114 &1331489801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28774,6 +28774,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puzzleID: maze
   roomID: lab1
+  puzzleEnterTime: 0
+  attemptCount: 0
+  idleTime: 0
+  lastInputTime: 0
 --- !u!1001 &1333224659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30368,6 +30372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb351bfb449ce24a87403e9bdfdfb11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terminalID: Hash
   terminalHeader: 'UW CS LAB ACCESS TERMINAL (Hash)
 
     System build: 2026.04
@@ -33407,7 +33412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1520236061}
   - component: {fileID: 1520236060}
-  - component: {fileID: 1520236059}
+  - component: {fileID: 1520236062}
   m_Layer: 0
   m_Name: Room_Lab1
   m_TagString: Untagged
@@ -33415,19 +33420,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1520236059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520236058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f4e8f0a47c324949b89f83dc52a0083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomID: lab1
 --- !u!65 &1520236060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33464,6 +33456,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1520236062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520236058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4e8f0a47c324949b89f83dc52a0083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomID: lab1
 --- !u!1001 &1521738608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34273,7 +34278,6 @@ MonoBehaviour:
   progressText: {fileID: 1678540654}
   object1: {fileID: 579690804}
   object2: {fileID: 1667696690}
-  tracker: {fileID: 1542845363}
 --- !u!114 &1542845363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34288,6 +34292,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puzzleID: terminals
   roomID: lab2
+  puzzleEnterTime: 0
+  attemptCount: 0
+  idleTime: 0
+  lastInputTime: 0
 --- !u!1001 &1545331339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34511,6 +34519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb351bfb449ce24a87403e9bdfdfb11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terminalID: Dijkstra
   terminalHeader: 'UW CS LAB ACCESS TERMINAL (Dijkstra)
 
     System build: 2026.04
@@ -40540,7 +40549,6 @@ MonoBehaviour:
   closeButton: {fileID: 0}
   powerSystem: {fileID: 1644170834}
   screenFlicker: {fileID: 1591824008}
-  tracker: {fileID: 1809996158}
 --- !u!114 &1809996158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40555,6 +40563,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puzzleID: pipe
   roomID: lab1
+  puzzleEnterTime: 0
+  attemptCount: 0
+  idleTime: 0
+  lastInputTime: 0
 --- !u!4 &1812012333 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3204423859770501514, guid: 3713613c4ffcd6945900432c53af79b8, type: 3}
@@ -41995,8 +42007,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889643039}
-  - component: {fileID: 1889643038}
   - component: {fileID: 1889643037}
+  - component: {fileID: 1889643040}
   m_Layer: 0
   m_Name: Room_012
   m_TagString: Untagged
@@ -42025,19 +42037,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.0006084, y: 3.6452374, z: 6.634483}
   m_Center: {x: -2.786478, y: 1.1661966, z: 3.9616268}
---- !u!114 &1889643038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889643036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f4e8f0a47c324949b89f83dc52a0083, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomID: 012
 --- !u!4 &1889643039
 Transform:
   m_ObjectHideFlags: 0
@@ -42053,6 +42052,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1889643040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889643036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4e8f0a47c324949b89f83dc52a0083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomID: 012
 --- !u!4 &1892102032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2624671227268106405, guid: a5ac041b79f79364ca8481b503332787, type: 3}
@@ -45888,6 +45900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb351bfb449ce24a87403e9bdfdfb11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terminalID: BFS
   terminalHeader: 'UW CS LAB ACCESS TERMINAL (BFS)
 
     System build: 2026.04

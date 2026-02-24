@@ -104,8 +104,10 @@ public class TerminalUI : MonoBehaviour
     {
         if (!isOpen) return;
 
-        // 注意：TMP_InputField onSubmit 只有在回车时触发（Single Line）
         string typed = (value ?? "").Trim();
+
+        // 🔥 每次提交都记录一次 attempt
+        TerminalProgressManager.Instance?.RegisterTerminalAttempt();
 
         if (typed == expectedAnswer)
         {
@@ -113,12 +115,10 @@ public class TerminalUI : MonoBehaviour
             inputField.text = "";
             inputField.ActivateInputField();
 
-            // 通知当前电脑“已解锁”
             TerminalProgressManager.Instance?.MarkCurrentComputerSolved();
         }
         else
         {
-            // 错误：不输出任何提示；清空让玩家重新输入
             inputField.text = "";
             inputField.ActivateInputField();
         }
