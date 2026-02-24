@@ -30,7 +30,7 @@ public class FlashlightPickupTrigger : MonoBehaviour
             if (uv != null)
             {
                 uv.isPickedUp = true;
-                uv.canUseInArea = true;
+                uv.canUseInArea = false;
             }
         }
 

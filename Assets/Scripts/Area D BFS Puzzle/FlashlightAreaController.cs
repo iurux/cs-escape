@@ -7,24 +7,26 @@ public class FlashlightAreaController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Lab2 ±¸¿ª(Å« ¹Ú½º) ¾ÈÀ¸·Î µé¾î¿ÔÀ» ¶§
+        Debug.Log("ENTER AREA");
+        // Lab2 ï¿½ï¿½ï¿½ï¿½(Å« ï¿½Ú½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         if (other.CompareTag("Player") && playerFlashlight.isPickedUp)
         {
             playerFlashlight.canUseInArea = true;
             if (guideHUD != null) guideHUD.SetActive(true);
-            Debug.Log("Lab2 ÁøÀÔ: ¼ÕÀüµî »ç¿ë °¡´É");
+            Debug.Log("Lab2 ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // Lab2 ±¸¿ª(Å« ¹Ú½º) ¹ÛÀ¸·Î ³ª°¬À» ¶§
+        Debug.Log("EXIT AREA");
+        // Lab2 ï¿½ï¿½ï¿½ï¿½(Å« ï¿½Ú½ï¿½) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         if (other.CompareTag("Player"))
         {
             playerFlashlight.canUseInArea = false;
-            playerFlashlight.ForceTurnOff(); // ºÒ ²ô±â
-            if (guideHUD != null) guideHUD.SetActive(false); // °¡ÀÌµå ¼û±â±â
-            Debug.Log("Lab2 ÅðÀå: ¼ÕÀüµî »ç¿ë ºÒ°¡");
+            playerFlashlight.ForceTurnOff(); // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            if (guideHUD != null) guideHUD.SetActive(false); // ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+            Debug.Log("Lab2 ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½");
         }
     }
 }

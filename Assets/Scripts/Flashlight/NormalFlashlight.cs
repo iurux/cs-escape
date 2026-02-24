@@ -9,10 +9,10 @@ public class NormalFlashlight : MonoBehaviour
 
     private bool isOn = false;
 
-    // ¿ÀºêÁ§Æ®°¡ È°¼ºÈ­µÉ ¶§(¾ÆÀÌÅÛÀ» ÁÖ¿üÀ» ¶§) ½ÇÇà
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¿ï¿½ï¿½ï¿½ ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½
     void OnEnable()
     {
-        // ÁÝ´Â ¼ø°£¿¡´Â ¹«Á¶°Ç ²¨Áø »óÅÂ·Î ÃÊ±âÈ­
+        // ï¿½Ý´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½Ê±ï¿½È­
         isOn = false; 
         if (lightSource != null) 
         {
@@ -22,21 +22,23 @@ public class NormalFlashlight : MonoBehaviour
 
     void Update()
     {
-        // ÁÖ¿î »óÅÂ°¡ ¾Æ´Ï¸é ÀÛµ¿ ¾È ÇÔ
+        // ï¿½Ö¿ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½Ûµï¿½ ï¿½ï¿½ ï¿½ï¿½
         if (!isPickedUp) return;
 
-        if (Keyboard.current.qKey.wasPressedThisFrame)
+        if (Keyboard.current.rKey.wasPressedThisFrame)
         {
+            Debug.Log("R detected");
             ToggleFlashlight();
         }
     }
 
     void ToggleFlashlight()
     {
+        Debug.Log("TOGGLE BY INPUT");
         if (lightSource == null) return;
 
         isOn = !isOn;
         lightSource.enabled = isOn;
-        Debug.Log("ÀÏ¹Ý ¼ÕÀüµî »óÅÂ: " + (isOn ? "ON" : "OFF"));
+        Debug.Log("ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: " + (isOn ? "ON" : "OFF"));
     }
 }

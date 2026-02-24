@@ -11,8 +11,8 @@ public class UVFlashlight : MonoBehaviour
     public GameObject guideHUD;
 
     [Header("Status")]
-    public bool isPickedUp = false;      // ¾ÆÀÌÅÛÀ» È¹µæÇß´Â°¡?
-    public bool canUseInArea = false;    // ÇöÀç »ç¿ë °¡´ÉÇÑ ±¸¿ª(Lab2)ÀÎ°¡?
+    public bool isPickedUp = false;      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ï¿½ß´Â°ï¿½?
+    public bool canUseInArea = false;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(Lab2)ï¿½Î°ï¿½?
     
     private bool isLightOn = false;
     private Camera playerCamera;
@@ -26,11 +26,17 @@ public class UVFlashlight : MonoBehaviour
 
     void Update()
     {
-        // È¹µæ ÀüÀÌ°Å³ª, Çã¿ëµÈ ±¸¿ªÀÌ ¾Æ´Ï¸é ÀÛµ¿ ¾È ÇÔ
+        // È¹ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°Å³ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½Ûµï¿½ ï¿½ï¿½ ï¿½ï¿½
+        Debug.Log("PickedUp: " + isPickedUp + " Area: " + canUseInArea);
         if (!isPickedUp || !canUseInArea) return;
 
-        if (Keyboard.current.qKey.wasPressedThisFrame)
+        if (Keyboard.current.rKey.wasPressedThisFrame)
         {
+            if (!canUseInArea)
+            {
+                Debug.Log("Not in usable area");
+                return;
+            }
             ToggleLight();
         }
 
@@ -52,7 +58,7 @@ public class UVFlashlight : MonoBehaviour
         if (uvLightSource != null) uvLightSource.enabled = false;
     }
 
-    // ¿¡·¯ ÇØ°á: ·¹ÀÌÄ³½ºÆ®·Î ÈùÆ®¸¦ Ã£´Â ·ÎÁ÷
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ø°ï¿½: ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     void CheckForHints()
     {
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);

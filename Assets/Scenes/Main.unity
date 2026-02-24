@@ -3065,7 +3065,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[Q] Turn On/Off the flashlight'
+  m_text: '[R] Turn On/Off the flashlight'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5616,7 +5616,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[Q] Turn On/Off the uv light'
+  m_text: '[R] Turn On/Off the uv light'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -15058,9 +15058,9 @@ Light:
   m_Type: 0
   m_Color: {r: 0.50980395, g: 0, b: 1, a: 1}
   m_Intensity: 50
-  m_Range: 10
-  m_SpotAngle: 50
-  m_InnerSpotAngle: 30
+  m_Range: 60
+  m_SpotAngle: 100
+  m_InnerSpotAngle: 80
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -15069,7 +15069,7 @@ Light:
     m_Strength: 1
     m_Bias: 0.0001
     m_NormalBias: 0.4
-    m_NearPlane: 0.099999994
+    m_NearPlane: 0.1
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -30319,9 +30319,9 @@ Light:
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 10
-  m_Range: 30
-  m_SpotAngle: 50
-  m_InnerSpotAngle: 30
+  m_Range: 60
+  m_SpotAngle: 100
+  m_InnerSpotAngle: 50
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
