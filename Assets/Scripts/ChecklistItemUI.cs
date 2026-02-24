@@ -21,6 +21,11 @@ public class ChecklistItemUI : MonoBehaviour
         UpdateVisual();
     }
 
+    public bool IsCompleted()
+    {
+        return completed;
+    }
+
     public void UpdateVisual()
     {
         if (!completed) return;
@@ -31,5 +36,11 @@ public class ChecklistItemUI : MonoBehaviour
     public string GetItemId()
     {
         return itemName;
+    }
+
+    public void ResetItem()
+    {
+        completed = false;
+        UpdateVisual();
     }
 }

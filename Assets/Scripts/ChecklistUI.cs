@@ -50,6 +50,27 @@ public class ChecklistUI : MonoBehaviour
         }
     }
 
+    public bool AllCollected()
+    {
+        InitializeIfNeeded();
+
+        foreach (var item in checklistItems)
+        {
+            if (!item.IsCompleted())   // 需要下面补这个函数
+                return false;
+        }
+
+        return true;
+    }
+
+    public void ResetAll()
+    {
+        foreach (var item in checklistItems)
+        {
+            item.ResetItem();
+        }
+    }
+
 
     // int completedCount = 0;
 

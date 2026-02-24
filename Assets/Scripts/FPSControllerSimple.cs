@@ -298,6 +298,17 @@ public class FPSControllerSimple : MonoBehaviour
                     return;
                 }
 
+                // ④ Elevator Button
+                ElevatorButtonInteract elevator =
+                    hit.collider.GetComponent<ElevatorButtonInteract>() ??
+                    hit.collider.GetComponentInParent<ElevatorButtonInteract>();
+
+                if (elevator != null)
+                {
+                    elevator.Interact();
+                    return;
+                }
+
                 // === Terminal Computer (Area A) ===
                 TerminalInteractable terminalComputer =
                     hit.collider.GetComponent<TerminalInteractable>() ??
