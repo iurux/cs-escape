@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
+    <script>
+    console.log("Firebase template loaded");
+    </script>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity Web Player | CS Escape</title>
@@ -11,30 +14,39 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics-compat.js"></script>
 
     <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyAXtzLXE0yUoK5waMJfp9Do53kKE__81S4",
-        authDomain: "cs-escape.firebaseapp.com",
-        projectId: "cs-escape",
-        storageBucket: "cs-escape.firebasestorage.app",
-        messagingSenderId: "702061261486",
-        appId: "1:702061261486:web:7eb3ee4de1d33552c1b33f",
-        measurementId: "G-L72HEKPBSR"
-      };
+      window.addEventListener("load", function () {
 
-      // 初始化
-      firebase.initializeApp(firebaseConfig);
-      const analytics = firebase.analytics();
+        const firebaseConfig = {
+          apiKey: "AIzaSyCkWdt4I0ZEjM5llJlMy-bn86KmIwB-MZw",
+          authDomain: "cs-escape-3f753.firebaseapp.com",
+          projectId: "cs-escape-3f753",
+          storageBucket: "cs-escape-3f753.firebasestorage.app",
+          messagingSenderId: "288694122166",
+          appId: "1:288694122166:web:5ca2c663b54b010a855817",
+          measurementId: "G-DYDJHQB0MP"
+        };
 
-      // 让 Unity 可以调用
-      window.sendUnityEvent = function(eventName, jsonData) {
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        window.sendUnityEvent = function(eventName, jsonData) {
           try {
-              const data = JSON.parse(jsonData);
-              firebase.analytics().logEvent(eventName, data);
-              console.log("Firebase Event Sent:", eventName, data);
+            const parsed = JSON.parse(jsonData);
+
+            firebase.analytics().logEvent(eventName, {
+              player_id: parsed.player_id || "",
+              session_id: parsed.session_id || "",
+              game_version: parsed.game_version || ""
+            });
+
+            console.log("Firebase Event Sent:", eventName);
+
           } catch (e) {
-              console.error("Firebase Error:", e);
+            console.error("Firebase Error:", e);
           }
-      };
+        };
+
+      });
     </script>
   </head>
   <body>
