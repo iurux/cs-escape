@@ -39071,7 +39071,7 @@ MonoBehaviour:
   realMugModel: {fileID: 1259413143}
   waterInsideCup: {fileID: 779955741}
   hiddenText: {fileID: 816022222}
-  tutorialSpawnPoint: {fileID: 0}
+  tutorialSpawnPoint: {fileID: 2078688674}
   blackScreen: {fileID: 410252627}
   player: {fileID: 592913094}
   dialogueUI: {fileID: 1665245401}
