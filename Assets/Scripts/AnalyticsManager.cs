@@ -8,6 +8,13 @@ public class AnalyticsManager : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void SendUnityAnalytics(string eventName, string jsonData);
+
+    [DllImport("__Internal")]
+    private static extern void RegisterUnloadHandler(
+        string playerID,
+        string sessionID,
+        string gameStartTime
+    );
 #endif
 
     public static AnalyticsManager Instance;
@@ -54,6 +61,15 @@ public class AnalyticsManager : MonoBehaviour
         gameStartTime = Time.time;
 
         LogEvent("session_start", new Dictionary<string, object>());
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // 🔥 注册浏览器关闭监听
+        RegisterUnloadHandler(
+            playerID,
+            sessionID,
+            gameStartTime.ToString()
+        );
+#endif
     }
 
     void OnApplicationQuit()
@@ -62,7 +78,8 @@ public class AnalyticsManager : MonoBehaviour
 
         LogEvent("session_end", new Dictionary<string, object>
         {
-            { "total_play_time", totalPlayTime }
+            { "total_play_time", totalPlayTime },
+            { "closed_by", "application_quit" }
         });
     }
 
@@ -71,13 +88,11 @@ public class AnalyticsManager : MonoBehaviour
     {
         Dictionary<string, object> finalData = new Dictionary<string, object>();
 
-        // 基础字段
         finalData["event_name"] = eventName;
         finalData["player_id"] = playerID;
         finalData["session_id"] = sessionID;
         finalData["game_version"] = gameVersion;
 
-        // 追加自定义字段
         if (eventData != null)
         {
             foreach (var kv in eventData)
@@ -95,7 +110,6 @@ public class AnalyticsManager : MonoBehaviour
 #endif
     }
 
-    // 🔥 简单 JSON 转换（支持 string/float/int/bool）
     static string DictionaryToJson(Dictionary<string, object> dict)
     {
         List<string> entries = new List<string>();
