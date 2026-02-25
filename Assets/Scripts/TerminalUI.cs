@@ -38,6 +38,13 @@ public class TerminalUI : MonoBehaviour
         // {
         //     Close();
         // }
+        
+        // 如果玩家点鼠标，强制把焦点拉回输入框
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            inputField.ActivateInputField();
+            inputField.Select();
+        }
     }
 
     // 由电脑调用

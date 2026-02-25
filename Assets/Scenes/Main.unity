@@ -3983,7 +3983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemId: Headphone
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4f7b272de47a7a2468db2c079ed31fa2, type: 3}
 --- !u!65 &202638481
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11141,7 +11141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemId: Laptop
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 103899e764ea8b74b9cd84e85bb605bc, type: 3}
 --- !u!4 &490078497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 493332, guid: 35e7ce7e1bb8eeb4f8e896fdfa8176db, type: 3}
@@ -13037,7 +13037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemId: Pen
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a72fe40b4fb401a4c8a30a01c4dd77bf, type: 3}
 --- !u!65 &547418752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28040,7 +28040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemId: Phone
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e9c294bc408904b48b0becde8acd8e27, type: 3}
 --- !u!4 &1304195479 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 463835053371953216, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
@@ -36719,7 +36719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerFlashlightObject: {fileID: 1389990602}
   itemId: Flashlight
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 201c174393f297f4fade66de3518f5d0, type: 3}
   dialogueUI: {fileID: 1665245401}
 --- !u!114 &1626416997
 MonoBehaviour:
@@ -44265,7 +44265,7 @@ MonoBehaviour:
   playerFlashlightHolder: {fileID: 1734293810}
   guideHUD: {fileID: 73179198}
   itemId: UV Light
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 201c174393f297f4fade66de3518f5d0, type: 3}
   dialogueUI: {fileID: 1665245401}
 --- !u!114 &1998679098
 MonoBehaviour:
