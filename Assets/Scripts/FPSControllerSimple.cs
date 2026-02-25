@@ -64,6 +64,7 @@ public class FPSControllerSimple : MonoBehaviour
     {
         HandleEscape();
         HandleInventoryToggle();
+        HandleQCloseUI();
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
@@ -488,43 +489,34 @@ public class FPSControllerSimple : MonoBehaviour
         if (!Keyboard.current.escapeKey.wasPressedThisFrame)
             return;
 
-        // ① 读书中 → 关书
-        if (isReadingBook)
-        {
-            CloseBookUI();
-            return;
-        }
-
-        // ② Inventory 开着 → 关 Inventory
-        if (inventoryOpen)
-        {
-            inventoryOpen = false;
-            inventoryPanel.SetActive(false);
-            Time.timeScale = 1f;
-            return;
-        }
-
-        // ③ Puzzle 开着 → 关闭 Puzzle
-        if (circuitPuzzle != null &&
-            circuitPuzzle.puzzleCanvasPanel.activeSelf)
-        {
-            ClosePuzzleAndResumeGame();
-            return;
-        }
-
-        // ④ Terminal 开着 → 关 Terminal
-        if (terminalUI != null && terminalUI.IsOpen)
-        {
-            terminalUI.Close();
-            return;
-        }
-
         // ④ 鼠标还锁着 → 只释放鼠标
         if (!cursorUnlockedByESC)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             cursorUnlockedByESC = true;
+            return;
+        }
+    }
+
+    void HandleQCloseUI()
+    {
+        if (!Keyboard.current.qKey.wasPressedThisFrame)
+            return;
+
+        // ✅ 1) Book UI: Q 关闭
+        if (isReadingBook)
+        {
+            CloseBookUI();
+            return;
+        }
+
+        // ✅ 2) Circuit Puzzle UI: Q 关闭
+        if (circuitPuzzle != null &&
+            circuitPuzzle.puzzleCanvasPanel != null &&
+            circuitPuzzle.puzzleCanvasPanel.activeSelf)
+        {
+            ClosePuzzleAndResumeGame();
             return;
         }
     }

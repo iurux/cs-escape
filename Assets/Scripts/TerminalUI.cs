@@ -34,10 +34,10 @@ public class TerminalUI : MonoBehaviour
     {
         if (!isOpen) return;
 
-        if (Keyboard.current != null && Keyboard.current[closeKey].wasPressedThisFrame)
-        {
-            Close();
-        }
+        // if (Keyboard.current != null && Keyboard.current[closeKey].wasPressedThisFrame)
+        // {
+        //     Close();
+        // }
     }
 
     // 由电脑调用
@@ -107,6 +107,12 @@ public class TerminalUI : MonoBehaviour
 
         string typed = (value ?? "").Trim();
 
+        if (typed == "quit")
+        {
+            Close();
+            return;
+        }
+
         // 🔥 每次提交都记录一次 attempt
         TerminalProgressManager.Instance?.RegisterTerminalAttempt();
 
@@ -115,6 +121,8 @@ public class TerminalUI : MonoBehaviour
             terminalText.text += typed + "\n" + successLine + "\n\n> ";
             inputField.text = "";
             inputField.ActivateInputField();
+            // ✅ 把“密码”改成 quit（下一步必须输入 quit 才能退出）
+            expectedAnswer = "quit";
 
             TerminalProgressManager.Instance?.MarkCurrentComputerSolved();
         }

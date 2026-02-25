@@ -42,6 +42,26 @@ public class CircuitPuzzleManager : MonoBehaviour
         puzzleCanvasPanel.SetActive(false);
     }
 
+    void Update()
+    {
+        if (!puzzleActive) return;
+
+        if (UnityEngine.InputSystem.Keyboard.current != null &&
+            UnityEngine.InputSystem.Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            FPSControllerSimple player = FindObjectOfType<FPSControllerSimple>();
+
+            if (player != null)
+            {
+                player.ClosePuzzleAndResumeGame();
+            }
+            else
+            {
+                ClosePuzzle();
+            }
+        }
+    }
+
     public void OpenPuzzle()
     {
         if (IsSolved) return;

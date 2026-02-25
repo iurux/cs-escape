@@ -82,7 +82,7 @@ public class MazeGame : MonoBehaviour
         if (solved) return;
 
         // ===== Exit maze =====
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (Keyboard.current.qKey.wasPressedThisFrame)
         {
             LogExit();
             ExitMaze();
