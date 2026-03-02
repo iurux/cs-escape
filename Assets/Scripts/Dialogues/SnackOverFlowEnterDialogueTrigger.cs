@@ -20,8 +20,8 @@ public class SnackOverFlowEnterDialogueTrigger : MonoBehaviour
                 {
                     "...I’m getting pretty thirsty.",
                     "I should get some water.",
-                    "Maybe I can use that mug over there...",
-                    "...and where is the water dispenser?"
+                    //"Maybe I can use that mug over there...",
+                    //"...and where is the water dispenser?"
                 };
 
                 dialogueUI.StartDialogue(lines);

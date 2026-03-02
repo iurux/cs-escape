@@ -29,7 +29,7 @@ public class WaterDispenserInteract : MonoBehaviour
     {
         Debug.Log("Drinking...");
 
-        // ✅ 用 Realtime
+        // 물 따르는 시간동안 멈추기
         yield return new WaitForSecondsRealtime(2f);
 
         if (waterInsideCup != null) waterInsideCup.SetActive(true);
@@ -44,17 +44,16 @@ public class WaterDispenserInteract : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1.5f);
 
-        // 🌫 模糊对白
-        if (dialogueUI != null)
+        /*if (dialogueUI != null)
         {
             dialogueUI.StartDialogue(new string[]
             {
                 "Wake up...?",
                 "What does it mean?"
             });
-        }
+        }*/
 
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(1f);
 
         // 🌑 黑屏
         if (blackScreen != null)

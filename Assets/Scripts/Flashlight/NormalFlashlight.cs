@@ -9,10 +9,10 @@ public class NormalFlashlight : MonoBehaviour
 
     private bool isOn = false;
 
-    // ������Ʈ�� Ȱ��ȭ�� ��(�������� �ֿ��� ��) ����
+    // 오브젝트가 활성화될 때(플레이어의 손에 들어왔을 때) 실행
     void OnEnable()
     {
-        // �ݴ� �������� ������ ���� ���·� �ʱ�ȭ
+        // 새로 활성화될 때마다 기본적으로 꺼진 상태로 초기화
         isOn = false; 
         if (lightSource != null) 
         {
@@ -22,7 +22,7 @@ public class NormalFlashlight : MonoBehaviour
 
     void Update()
     {
-        // �ֿ� ���°� �ƴϸ� �۵� �� ��
+        // 손전등을 획득한 상태가 아니라면 작동하지 않음
         if (!isPickedUp) return;
 
         if (Keyboard.current.rKey.wasPressedThisFrame)
@@ -39,6 +39,6 @@ public class NormalFlashlight : MonoBehaviour
 
         isOn = !isOn;
         lightSource.enabled = isOn;
-        Debug.Log("�Ϲ� ������ ����: " + (isOn ? "ON" : "OFF"));
+        Debug.Log("일반 손전등 상태: " + (isOn ? "ON" : "OFF"));
     }
 }
