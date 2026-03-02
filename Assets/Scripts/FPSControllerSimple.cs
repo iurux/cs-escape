@@ -224,6 +224,14 @@ public class FPSControllerSimple : MonoBehaviour
                     });
                 }
 
+                if (itemId == "Blue Notebook" && dialogueUI != null)
+                {
+                    dialogueUI.StartDialogue(new string[]
+                    {
+                        "Here is my notebook..."
+                    });
+                }
+
                 // SnackOverflow Key pickup
                 if (itemId == "SnackOverflow Key")
                 {
