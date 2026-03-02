@@ -224,6 +224,16 @@ public class FPSControllerSimple : MonoBehaviour
                     });
                 }
 
+                // SnackOverflow Key pickup
+                if (itemId == "SnackOverflow Key")
+                {
+                    dialogueUI.StartDialogue(new string[]
+                    {
+                        "This is a Snack Overflow Key.",
+                        "I can use this key to open the Snack Overflow door."
+                    });
+                }
+
                 Destroy(hit.collider.gameObject);
             }
         }
