@@ -22,9 +22,9 @@ public class DoorInteractable : MonoBehaviour
     public float autoCloseDelay = 3f;
 
     Coroutine autoCloseCoroutine;
-    [Header("Keypad Requirement")]
-    public NavKeypad.Keypad keypad;
-    public string needKeypadDialogue = "The door is locked. Maybe there's a passcode.";
+    // [Header("Keypad Requirement")]
+    // public NavKeypad.Keypad keypad;
+    // public string needKeypadDialogue = "The door is locked. Maybe there's a passcode.";
     [Header("Requirement")]
     public RequirementType requirement = RequirementType.None;
 
@@ -104,18 +104,18 @@ public class DoorInteractable : MonoBehaviour
         }
 
         // 4️⃣ 需要 Keypad 解锁
-        if (requirement == RequirementType.RequiresKeypadAccess)
-        {
-            if (keypad == null || !keypad.IsAccessGranted())
-            {
-                dialogueUI?.StartDialogue(new string[]
-                {
-                    "The door is locked.",
-                    "Maybe there's a passcode somewhere..."
-                });
-                return;
-            }
-        }
+        // if (requirement == RequirementType.RequiresKeypadAccess)
+        // {
+        //     if (keypad == null || !keypad.IsAccessGranted())
+        //     {
+        //         dialogueUI?.StartDialogue(new string[]
+        //         {
+        //             "The door is locked.",
+        //             "Maybe there's a passcode somewhere..."
+        //         });
+        //         return;
+        //     }
+        // }
 
         // ===== 条件通过，开门 =====
         Quaternion target = isOpen ? closedRot : openRot;
