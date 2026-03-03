@@ -19,6 +19,8 @@ public class DialogueUI : MonoBehaviour
     bool waitingForInput;
     Coroutine blinkRoutine;
     Coroutine dialogueRoutine;
+    public bool IsPlaying { get; private set; }
+    public FPSControllerSimple player;
 
     void Awake()
     {
@@ -40,6 +42,10 @@ public class DialogueUI : MonoBehaviour
 
     private IEnumerator PlayDialogue(string[] lines)
     {
+        IsPlaying = true;
+
+        if (player != null)
+            player.SetUILock(true);
         panel.SetActive(true);
         yield return null; // make sure UI refresh
 
@@ -57,13 +63,17 @@ public class DialogueUI : MonoBehaviour
             if (i < lines.Length - 1)
                 yield return WaitForAdvance();
             else
-                yield return new WaitForSeconds(3.0f); // show last sentence
+                yield return new WaitForSeconds(1.0f); // show last sentence
         }
 
         // Initializing UI
         dialogueText.text = "";
         continueHint.gameObject.SetActive(false);
         panel.SetActive(false);
+        IsPlaying = false;
+
+        if (player != null)
+            player.SetUILock(false);
         dialogueRoutine = null;
     }
 

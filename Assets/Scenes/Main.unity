@@ -38107,6 +38107,7 @@ MonoBehaviour:
   continueHint: {fileID: 408333475}
   advanceKey: 1
   blinkSpeed: 0.6
+  player: {fileID: 592913094}
 --- !u!114 &1665245402
 MonoBehaviour:
   m_ObjectHideFlags: 0
