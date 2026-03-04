@@ -52,23 +52,24 @@ public class MazeGame : MonoBehaviour
         tex = new Texture2D(COLS * TILE, ROWS * TILE);
         tex.filterMode = FilterMode.Point;
         mazeImage.texture = tex;
-        // ruleHintText.gameObject.SetActive(false);
 
         GenerateLevels();
         LoadLevel(1);
     }
 
-    void OnEnable()
-    {
-        startTime = Time.time;
-        moveCount = 0;
+    // void OnEnable()
+    // {
+    //     startTime = Time.time;
+    //     moveCount = 0;
+    //     solved = false;
 
-        AnalyticsManager.LogEvent("puzzle_start",
-            new Dictionary<string, object>
-            {
-                { "puzzle_id", puzzleID }
-            });
-    }
+    //     AnalyticsManager.LogEvent("puzzle_start",
+    //         new Dictionary<string, object>
+    //         {
+    //             { "puzzle_id", puzzleID },
+    //             { "level", level }
+    //         });
+    // }
 
     void Update()
     {
@@ -97,24 +98,12 @@ public class MazeGame : MonoBehaviour
             ruleChanged = true;
         }
 
-        // if (Keyboard.current.digit3Key.wasPressedThisFrame && level >= 3)
-        // {
-        //     rule = 3;
-        //     ruleChanged = true;
-        // }
-
         int dx = 0, dy = 0;
 
         if (Keyboard.current.wKey.wasPressedThisFrame) dy = -1;
         if (Keyboard.current.sKey.wasPressedThisFrame) dy = 1;
         if (Keyboard.current.aKey.wasPressedThisFrame) dx = -1;
         if (Keyboard.current.dKey.wasPressedThisFrame) dx = 1;
-
-//         if (Keyboard.current.tKey.wasPressedThisFrame)
-// {
-//             showRuleHint = !showRuleHint;
-//             ruleHintText.gameObject.SetActive(showRuleHint);
-//         }
 
         // level 3 reverse control
         if (level == 3 && rule == 1)
@@ -140,8 +129,30 @@ public class MazeGame : MonoBehaviour
     {
         int tile = currentMap[player.y, player.x];
 
+        // if (tile == 3 && rule == 1)
+        // {
+        //     if (level < MAX_LEVEL)
+        //     {
+        //         LoadLevel(level + 1);
+        //     }
+        //     else
+        //     {
+        //         PuzzleSolved();
+        //     }
+        // }
         if (tile == 3 && rule == 1)
         {
+            float duration = Time.time - startTime;
+
+            AnalyticsManager.LogEvent("level_complete",
+                new Dictionary<string, object>
+                {
+                    { "puzzle_id", puzzleID },
+                    { "level", level },
+                    { "moves", moveCount },
+                    { "time_spent", duration }
+                });
+
             if (level < MAX_LEVEL)
             {
                 LoadLevel(level + 1);
@@ -162,6 +173,18 @@ public class MazeGame : MonoBehaviour
         if (level == 1) currentMap = mapLevel1;
         if (level == 2) currentMap = mapLevel2;
         if (level == 3) currentMap = mapLevel3;
+        // 重置统计
+        startTime = Time.time;
+        moveCount = 0;
+        solved = false;
+
+        // 记录进入新 level
+        AnalyticsManager.LogEvent("puzzle_start",
+            new Dictionary<string, object>
+            {
+                { "puzzle_id", puzzleID },
+                { "level", level }
+            });
         
         UpdateHint();
         Draw();
@@ -248,29 +271,10 @@ public class MazeGame : MonoBehaviour
                 "What feels right may be wrong.\n" +
                 "And what is hidden may guide you.";
         }
-
-        // ===== Rule Hint（随规则变化）=====
-        // if (rule == 1)
-        // {
-        //     ruleHintText.text =
-        //         "Rule 1 — Normal movement\n" +
-        //         "Exit is visible.";
-        // }
-        // else if (rule == 2)
-        // {
-        //     ruleHintText.text =
-        //         "Rule 2 — Purple mode\n" +
-        //         "Can walk on purple tiles.";
-        // }
-        // else
-        // {
-        //     ruleHintText.text =
-        //         "Rule 3 — Reversed control\n" +
-        //         "Movement is inverted.";
-        // }
     }
     void LogExit()
     {
+        if (solved) return;   
         float duration = Time.time - startTime;
 
         AnalyticsManager.LogEvent("puzzle_exit",

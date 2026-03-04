@@ -111,8 +111,10 @@ public class CircuitPuzzleManager : MonoBehaviour
                 new Dictionary<string, object>
                 {
                     { "puzzle_id", puzzleID },
+                    { "time_spent", duration },
                     { "attempts", attemptCount },
-                    { "duration", duration }
+                    { "total_rotations", totalRotateCount },
+                    { "exit_reason", "manual_exit" }
                 });
         }
 
@@ -153,9 +155,9 @@ public class CircuitPuzzleManager : MonoBehaviour
             new Dictionary<string, object>
             {
                 { "puzzle_id", puzzleID },
+                { "time_spent", duration },
                 { "attempts", attemptCount },
-                { "duration", duration },
-                { "total_rotations", totalRotateCount } 
+                { "total_rotations", totalRotateCount }
             });
 
         // 화면 피드백(깜빡임) 활성화

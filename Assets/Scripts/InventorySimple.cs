@@ -34,13 +34,12 @@ public class InventorySimple : MonoBehaviour
 
     void LogItemCollected(string itemId)
     {
-        float timeSinceGameStart = Time.time - AnalyticsManager.gameStartTime;
-
         AnalyticsManager.LogEvent("item_collected",
             new Dictionary<string, object>
             {
                 { "item_id", itemId },
-                { "time_since_game_start", timeSinceGameStart }
+                { "room_id", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name },
+                { "inventory_count", items.Count }
             });
 
         Debug.Log("[Analytics] item_collected sent: " + itemId);

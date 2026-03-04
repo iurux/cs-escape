@@ -2,19 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class AnalyticsManager : MonoBehaviour
 {
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_WEB) && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void SendUnityAnalytics(string eventName, string jsonData);
+#else
+    private static void SendUnityAnalytics(string eventName, string jsonData)
+    {
+        Debug.Log("SendUnityAnalytics called (non-web)");
+    }
+#endif
 
+#if (UNITY_WEBGL || UNITY_WEB) && !UNITY_EDITOR
     [DllImport("__Internal")]
     private static extern void RegisterUnloadHandler(
         string playerID,
         string sessionID,
         string gameStartTime
     );
+#else
+    private static void RegisterUnloadHandler(
+        string playerID,
+        string sessionID,
+        string gameStartTime
+    ) { }
 #endif
 
     public static AnalyticsManager Instance;
@@ -38,6 +52,10 @@ public class AnalyticsManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         InitializePlayer();
+    }
+
+    void Start()
+    {
         StartSession();
     }
 
@@ -45,8 +63,7 @@ public class AnalyticsManager : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("player_id"))
         {
-            string newID = Guid.NewGuid().ToString();
-            PlayerPrefs.SetString("player_id", newID);
+            PlayerPrefs.SetString("player_id", Guid.NewGuid().ToString());
             PlayerPrefs.Save();
         }
 
@@ -63,7 +80,7 @@ public class AnalyticsManager : MonoBehaviour
         LogEvent("session_start", new Dictionary<string, object>());
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-        // 🔥 注册浏览器关闭监听
+        // 注册浏览器关闭监听
         RegisterUnloadHandler(
             playerID,
             sessionID,
@@ -83,51 +100,61 @@ public class AnalyticsManager : MonoBehaviour
         });
     }
 
-    // 🔥 核心函数
+    // 核心函数
     public static void LogEvent(string eventName, Dictionary<string, object> eventData)
     {
-        Dictionary<string, object> finalData = new Dictionary<string, object>();
+        Debug.Log("=== BUILD CHECK ===");
 
-        finalData["event_name"] = eventName;
-        finalData["player_id"] = playerID;
-        finalData["session_id"] = sessionID;
-        finalData["game_version"] = gameVersion;
-
-        if (eventData != null)
-        {
-            foreach (var kv in eventData)
-            {
-                finalData[kv.Key] = kv.Value;
-            }
-        }
-
-        string json = DictionaryToJson(finalData);
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-        SendUnityAnalytics(eventName, json);
-#else
-        Debug.Log("[Analytics] " + json);
+#if UNITY_WEBGL
+    Debug.Log("UNITY_WEBGL defined");
 #endif
-    }
 
-    static string DictionaryToJson(Dictionary<string, object> dict)
-    {
-        List<string> entries = new List<string>();
+#if UNITY_WEB
+    Debug.Log("UNITY_WEB defined");
+#endif
 
-        foreach (var kv in dict)
+#if UNITY_EDITOR
+    Debug.Log("UNITY_EDITOR defined");
+#endif
+        var finalData = new Dictionary<string, object>
         {
-            string value;
+            { "event_name", eventName },
+            { "player_id", playerID },
+            { "session_id", sessionID },
+            { "game_version", gameVersion },
+            { "ab_variant", ABTestManager.Variant },
+            { "server_timestamp", DateTime.UtcNow.ToString("o") },
+            { "time_since_game_start", Time.time - gameStartTime },
+            { "metadata", eventData ?? new Dictionary<string, object>() }
+        };
 
-            if (kv.Value is string)
-                value = $"\"{kv.Value}\"";
-            else if (kv.Value is bool)
-                value = kv.Value.ToString().ToLower();
-            else
-                value = kv.Value.ToString();
+        string json = JsonConvert.SerializeObject(finalData);
 
-            entries.Add($"\"{kv.Key}\":{value}");
-        }
-
-        return "{" + string.Join(",", entries) + "}";
+// #if (UNITY_WEBGL || UNITY_WEB) && !UNITY_EDITOR
+    SendUnityAnalytics(eventName, json);
+// #else
+    // Debug.Log("Event written: " + eventName);
+// #endif
     }
+
+    // static string DictionaryToJson(Dictionary<string, object> dict)
+    // {
+    //     List<string> entries = new List<string>();
+
+    //     foreach (var kv in dict)
+    //     {
+    //         string value;
+
+    //         if (kv.Value is string)
+    //             value = $"\"{kv.Value}\"";
+    //         else if (kv.Value is bool)
+    //             value = kv.Value.ToString().ToLower();
+    //         else
+    //             value = kv.Value.ToString();
+
+    //         entries.Add($"\"{kv.Key}\":{value}");
+    //     }
+
+    //     return "{" + string.Join(",", entries) + "}";
+    // }
 }

@@ -81,9 +81,7 @@ public class TerminalProgressManager : MonoBehaviour
         RefreshProgress();
 
         float timeSincePuzzleStart = Time.time - puzzleStartTime;
-        float timeSinceGameStart = Time.time - AnalyticsManager.gameStartTime;
 
-        // 🔥 每个 terminal 单独记录
         AnalyticsManager.LogEvent("terminal_solved",
             new Dictionary<string, object>
             {
@@ -91,8 +89,7 @@ public class TerminalProgressManager : MonoBehaviour
                 { "terminal_id", currentComputer.terminalID },
                 { "solved_order", solvedCount },
                 { "attempts", currentComputer.GetAttemptCount() },
-                { "time_since_puzzle_start", timeSincePuzzleStart },
-                { "time_since_game_start", timeSinceGameStart }
+                { "time_since_puzzle_start", timeSincePuzzleStart }
             });
 
         CheckAllSolved();
@@ -127,7 +124,7 @@ public class TerminalProgressManager : MonoBehaviour
                 new Dictionary<string, object>
                 {
                     { "puzzle_id", puzzleID },
-                    { "duration", duration },
+                    { "time_spent", duration },
                     { "total_terminals", 3 }
                 });
 

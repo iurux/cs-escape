@@ -19,6 +19,8 @@ public class DialogueUI : MonoBehaviour
     bool waitingForInput;
     Coroutine blinkRoutine;
     Coroutine dialogueRoutine;
+    public bool IsPlaying { get; private set; }
+    public FPSControllerSimple player;
 
     void Awake()
     {
@@ -40,10 +42,16 @@ public class DialogueUI : MonoBehaviour
 
     private IEnumerator PlayDialogue(string[] lines)
     {
-        panel.SetActive(true);
-        yield return null; // make sure UI refresh
+        bool forceRead = ABTestManager.Variant == "B";
 
-        // make sure text visible
+        IsPlaying = forceRead;
+
+        if (forceRead && player != null)
+            player.SetUILock(true);
+
+        panel.SetActive(true);
+        yield return null;
+
         Color tc = dialogueText.color;
         tc.a = 1f;
         dialogueText.color = tc;
@@ -53,17 +61,20 @@ public class DialogueUI : MonoBehaviour
             dialogueText.text = lines[i];
             yield return null;
 
-            // if last sentence, just terminated it
             if (i < lines.Length - 1)
                 yield return WaitForAdvance();
             else
-                yield return new WaitForSeconds(3.0f); // show last sentence
+                yield return new WaitForSeconds(2f);
         }
 
-        // Initializing UI
         dialogueText.text = "";
         continueHint.gameObject.SetActive(false);
         panel.SetActive(false);
+
+        if (forceRead && player != null)
+            player.SetUILock(false);
+
+        IsPlaying = false;
         dialogueRoutine = null;
     }
 

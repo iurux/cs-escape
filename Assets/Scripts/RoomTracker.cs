@@ -11,7 +11,7 @@ public class RoomTracker : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        if (playerInside) return;  // 🔥 防止重复进入触发
+        if (playerInside) return;
 
         playerInside = true;
         roomEnterTime = Time.time;
@@ -19,8 +19,7 @@ public class RoomTracker : MonoBehaviour
         AnalyticsManager.LogEvent("room_enter",
             new Dictionary<string, object>
             {
-                { "room_id", roomID },
-                { "time_since_game_start", Time.time - AnalyticsManager.gameStartTime }
+                { "room_id", roomID }
             });
     }
 
@@ -35,8 +34,7 @@ public class RoomTracker : MonoBehaviour
             new Dictionary<string, object>
             {
                 { "room_id", roomID },
-                { "duration", duration },
-                { "time_since_game_start", Time.time - AnalyticsManager.gameStartTime }
+                { "time_spent", duration }
             });
 
         playerInside = false;

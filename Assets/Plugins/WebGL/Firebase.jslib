@@ -17,7 +17,7 @@ mergeInto(LibraryManager.library, {
     data.server_timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
     firebase.firestore()
-        .collection("events")
+        .collection("events_v2")
         .add(data)
         .then(() => {
             console.log("Event written:", eventName);
@@ -49,7 +49,7 @@ mergeInto(LibraryManager.library, {
             server_timestamp: firebase.firestore.FieldValue.serverTimestamp()
         };
 
-        firebase.firestore().collection("events").add(data);
+        firebase.firestore().collection("events_v2").add(data);
     }
 
     window.addEventListener("beforeunload", sendSessionEnd);

@@ -54,12 +54,13 @@ public class ElevatorButtonInteract : MonoBehaviour
             collectedCount = checklistUI.TotalCollectedCount();
         }
 
-        // 🔥 扁平结构记录
         AnalyticsManager.LogEvent("game_complete",
             new Dictionary<string, object>
             {
-                { "total_time", totalTime },
-                { "total_items_collected", collectedCount }
+                { "time_spent", totalTime },
+                { "total_items_collected", collectedCount },
+                { "completion_state", "all_items_collected" },
+                { "room_id", UnityEngine.SceneManagement.SceneManager.GetActiveScene().name }
             });
 
         Debug.Log("Game Complete Logged");
