@@ -16,11 +16,11 @@ public class RoomTracker : MonoBehaviour
         playerInside = true;
         roomEnterTime = Time.time;
 
-        AnalyticsManager.LogEvent("room_enter",
-            new Dictionary<string, object>
-            {
-                { "room_id", roomID }
-            });
+        // AnalyticsManager.LogEvent("room_enter",
+        //     new Dictionary<string, object>
+        //     {
+        //         { "room_id", roomID }
+        //     });
     }
 
     void OnTriggerExit(Collider other)
@@ -30,12 +30,12 @@ public class RoomTracker : MonoBehaviour
 
         float duration = Time.time - roomEnterTime;
 
-        AnalyticsManager.LogEvent("room_exit",
-            new Dictionary<string, object>
-            {
-                { "room_id", roomID },
-                { "time_spent", duration }
-            });
+        // AnalyticsManager.LogEvent("room_exit",
+        //     new Dictionary<string, object>
+        //     {
+        //         { "room_id", roomID },
+        //         { "time_spent", duration }
+        //     });
 
         playerInside = false;
     }

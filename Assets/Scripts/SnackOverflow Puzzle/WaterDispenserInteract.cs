@@ -109,5 +109,17 @@ public class WaterDispenserInteract : MonoBehaviour
         }
 
         Debug.Log("Dream sequence finished.");
+        GameProgress.snackOverflowFinished = true;
+
+        HallwayPaintingsController hallway = FindObjectOfType<HallwayPaintingsController>();
+
+        if (hallway != null)
+        {
+            hallway.ShowPaintings();
+        }
+        else
+        {
+            Debug.LogError("HallwayPaintingsController not found!");
+        }
     }
 }

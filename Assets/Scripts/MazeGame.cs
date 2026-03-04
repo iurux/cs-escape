@@ -43,7 +43,8 @@ public class MazeGame : MonoBehaviour
     bool solved = false;
 
     // ===== Analytics =====
-    float startTime;
+    float levelStartTime;
+    float mazeStartTime;
     int moveCount = 0;
     string puzzleID = "maze";
 
@@ -54,22 +55,9 @@ public class MazeGame : MonoBehaviour
         mazeImage.texture = tex;
 
         GenerateLevels();
+        mazeStartTime = Time.unscaledTime; 
         LoadLevel(1);
     }
-
-    // void OnEnable()
-    // {
-    //     startTime = Time.time;
-    //     moveCount = 0;
-    //     solved = false;
-
-    //     AnalyticsManager.LogEvent("puzzle_start",
-    //         new Dictionary<string, object>
-    //         {
-    //             { "puzzle_id", puzzleID },
-    //             { "level", level }
-    //         });
-    // }
 
     void Update()
     {
@@ -128,21 +116,10 @@ public class MazeGame : MonoBehaviour
     void CheckGoal()
     {
         int tile = currentMap[player.y, player.x];
-
-        // if (tile == 3 && rule == 1)
-        // {
-        //     if (level < MAX_LEVEL)
-        //     {
-        //         LoadLevel(level + 1);
-        //     }
-        //     else
-        //     {
-        //         PuzzleSolved();
-        //     }
-        // }
         if (tile == 3 && rule == 1)
         {
-            float duration = Time.time - startTime;
+            float duration = Time.unscaledTime - levelStartTime;
+            duration = Mathf.Round(duration * 100f) / 100f;
 
             AnalyticsManager.LogEvent("level_complete",
                 new Dictionary<string, object>
@@ -174,7 +151,7 @@ public class MazeGame : MonoBehaviour
         if (level == 2) currentMap = mapLevel2;
         if (level == 3) currentMap = mapLevel3;
         // 重置统计
-        startTime = Time.time;
+        levelStartTime = Time.unscaledTime;
         moveCount = 0;
         solved = false;
 
@@ -207,7 +184,7 @@ public class MazeGame : MonoBehaviour
         player = new Vector2Int(nx, ny);
 
         // Exit only works in rule 1
-        CheckGoal();
+        // CheckGoal();
     }
 
     void PuzzleSolved()
@@ -215,7 +192,8 @@ public class MazeGame : MonoBehaviour
         if (solved) return;
         solved = true;
 
-        float duration = Time.time - startTime;
+        float duration = Time.unscaledTime - mazeStartTime;
+        duration = Mathf.Round(duration * 100f) / 100f;
 
         AnalyticsManager.LogEvent("puzzle_complete",
             new Dictionary<string, object>
@@ -275,7 +253,8 @@ public class MazeGame : MonoBehaviour
     void LogExit()
     {
         if (solved) return;   
-        float duration = Time.time - startTime;
+        float duration = Time.unscaledTime - levelStartTime;
+        duration = Mathf.Round(duration * 100f) / 100f;
 
         AnalyticsManager.LogEvent("puzzle_exit",
             new Dictionary<string, object>

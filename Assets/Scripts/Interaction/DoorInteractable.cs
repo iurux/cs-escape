@@ -17,14 +17,6 @@ public class DoorInteractable : MonoBehaviour
         RequiresKeypadAccess 
     }
 
-    [Header("Auto Close")]
-    public bool autoClose = true;
-    public float autoCloseDelay = 3f;
-
-    Coroutine autoCloseCoroutine;
-    // [Header("Keypad Requirement")]
-    // public NavKeypad.Keypad keypad;
-    // public string needKeypadDialogue = "The door is locked. Maybe there's a passcode.";
     [Header("Requirement")]
     public RequirementType requirement = RequirementType.None;
 
@@ -61,11 +53,6 @@ public class DoorInteractable : MonoBehaviour
     public void TryInteract(InventorySimple inv, DialogueUI dialogueUI)
     {
         if (isAnimating) return;
-        if (autoCloseCoroutine != null)
-        {
-            StopCoroutine(autoCloseCoroutine);
-            autoCloseCoroutine = null;
-        }
 
         // ===== 条件检查 =====
 
@@ -103,20 +90,6 @@ public class DoorInteractable : MonoBehaviour
             }
         }
 
-        // 4️⃣ 需要 Keypad 解锁
-        // if (requirement == RequirementType.RequiresKeypadAccess)
-        // {
-        //     if (keypad == null || !keypad.IsAccessGranted())
-        //     {
-        //         dialogueUI?.StartDialogue(new string[]
-        //         {
-        //             "The door is locked.",
-        //             "Maybe there's a passcode somewhere..."
-        //         });
-        //         return;
-        //     }
-        // }
-
         // ===== 条件通过，开门 =====
         Quaternion target = isOpen ? closedRot : openRot;
         StartCoroutine(AnimateDoor(target));
@@ -127,13 +100,6 @@ public class DoorInteractable : MonoBehaviour
         requirement = newRequirement;
     }
 
-    public void ForceClose()
-    {
-        if (!isAnimating && isOpen)
-        {
-            StartCoroutine(AnimateDoor(closedRot));
-        }
-    }
     IEnumerator AnimateDoor(Quaternion target)
     {
         isAnimating = true;
@@ -152,23 +118,5 @@ public class DoorInteractable : MonoBehaviour
         doorToRotate.localRotation = target;
         isOpen = !isOpen;
         isAnimating = false;
-
-        if (autoClose && isOpen)
-        {
-            if (autoCloseCoroutine != null)
-                StopCoroutine(autoCloseCoroutine);
-
-            autoCloseCoroutine = StartCoroutine(AutoCloseRoutine());
-        }
-
-        IEnumerator AutoCloseRoutine()
-        {
-            yield return new WaitForSeconds(autoCloseDelay);
-
-            if (!isAnimating && isOpen)
-            {
-                StartCoroutine(AnimateDoor(closedRot));
-            }
-        }
     }
 }
