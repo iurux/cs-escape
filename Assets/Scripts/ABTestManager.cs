@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class ABTestManager : MonoBehaviour
 {
-    public static string Variant { get; private set; }
+    // public static string Variant { get; private set; }
+    public static string Variant { get; private set; } = "A";
 
     void Awake()
+    
     {
         DontDestroyOnLoad(gameObject);
     #if UNITY_EDITOR
