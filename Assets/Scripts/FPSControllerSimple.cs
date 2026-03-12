@@ -66,7 +66,7 @@ public class FPSControllerSimple : MonoBehaviour
         HandleInventoryToggle();
         HandleQCloseUI();
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (!inventoryOpen && Mouse.current.leftButton.wasPressedThisFrame)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

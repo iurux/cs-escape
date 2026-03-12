@@ -1,14 +1,21 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class DialogueUI : MonoBehaviour
 {
-    [Header("UI")]
+    [Header("Main UI")]
     public GameObject panel;
     public TMP_Text dialogueText;
     public TMP_Text continueHint;
+
+    [Header("History UI")]
+    public GameObject historyPanel;
+    public TMP_Text historyText;
+    public ScrollRect historyScrollRect;
 
     [Header("Input")]
     public Key advanceKey = Key.Space;
@@ -16,24 +23,36 @@ public class DialogueUI : MonoBehaviour
     [Header("Blink")]
     public float blinkSpeed = 0.6f;
 
+    [Header("History Settings")]
+    public int maxHistoryEntries = 100;
+
     bool waitingForInput;
     Coroutine blinkRoutine;
     Coroutine dialogueRoutine;
+    Coroutine scrollRoutine;
+
     public bool IsPlaying { get; private set; }
     public FPSControllerSimple player;
 
+    private List<string> dialogueHistory = new List<string>();
+
     void Awake()
     {
-        panel.SetActive(false);
-        continueHint.gameObject.SetActive(false);
+        if (panel != null)
+            panel.SetActive(false);
+
+        if (continueHint != null)
+            continueHint.gameObject.SetActive(false);
+
+        if (historyPanel != null)
+            historyPanel.SetActive(false);
     }
 
     /// <summary>
-    /// The only public method
+    /// The only public method for starting dialogue
     /// </summary>
     public void StartDialogue(string[] lines)
     {
-        // 防止重复启动
         if (dialogueRoutine != null)
             StopCoroutine(dialogueRoutine);
 
@@ -49,16 +68,25 @@ public class DialogueUI : MonoBehaviour
         if (forceRead && player != null)
             player.SetUILock(true);
 
-        panel.SetActive(true);
+        if (panel != null)
+            panel.SetActive(true);
+
         yield return null;
 
-        Color tc = dialogueText.color;
-        tc.a = 1f;
-        dialogueText.color = tc;
+        if (dialogueText != null)
+        {
+            Color tc = dialogueText.color;
+            tc.a = 1f;
+            dialogueText.color = tc;
+        }
 
         for (int i = 0; i < lines.Length; i++)
         {
-            dialogueText.text = lines[i];
+            if (dialogueText != null)
+                dialogueText.text = lines[i];
+
+            AddToHistory(lines[i]);
+
             yield return null;
 
             if (i < lines.Length - 1)
@@ -67,9 +95,14 @@ public class DialogueUI : MonoBehaviour
                 yield return new WaitForSeconds(2f);
         }
 
-        dialogueText.text = "";
-        continueHint.gameObject.SetActive(false);
-        panel.SetActive(false);
+        if (dialogueText != null)
+            dialogueText.text = "";
+
+        if (continueHint != null)
+            continueHint.gameObject.SetActive(false);
+
+        if (panel != null)
+            panel.SetActive(false);
 
         if (forceRead && player != null)
             player.SetUILock(false);
@@ -81,18 +114,24 @@ public class DialogueUI : MonoBehaviour
     IEnumerator WaitForAdvance()
     {
         waitingForInput = true;
-        continueHint.gameObject.SetActive(true);
+
+        if (continueHint != null)
+            continueHint.gameObject.SetActive(true);
 
         blinkRoutine = StartCoroutine(BlinkHint());
 
         while (waitingForInput)
         {
-            if (
-                (Keyboard.current != null &&
-                 Keyboard.current[advanceKey].wasPressedThisFrame) ||
-                (Mouse.current != null &&
-                 Mouse.current.leftButton.wasPressedThisFrame)
-            )
+            bool advanceByKeyboard =
+                Keyboard.current != null &&
+                Keyboard.current[advanceKey].wasPressedThisFrame;
+
+            bool advanceByMouse =
+                (historyPanel == null || !historyPanel.activeSelf) &&
+                Mouse.current != null &&
+                Mouse.current.leftButton.wasPressedThisFrame;
+
+            if (advanceByKeyboard || advanceByMouse)
             {
                 waitingForInput = false;
             }
@@ -103,17 +142,123 @@ public class DialogueUI : MonoBehaviour
         if (blinkRoutine != null)
             StopCoroutine(blinkRoutine);
 
-        continueHint.gameObject.SetActive(false);
+        if (continueHint != null)
+            continueHint.gameObject.SetActive(false);
     }
 
     IEnumerator BlinkHint()
     {
         while (true)
         {
-            continueHint.alpha = 1f;
+            if (continueHint != null)
+                continueHint.alpha = 1f;
+
             yield return new WaitForSeconds(blinkSpeed);
-            continueHint.alpha = 0f;
+
+            if (continueHint != null)
+                continueHint.alpha = 0f;
+
             yield return new WaitForSeconds(blinkSpeed);
         }
+    }
+
+    private void AddToHistory(string line)
+    {
+        if (string.IsNullOrWhiteSpace(line))
+            return;
+
+        dialogueHistory.Add(line);
+
+        if (dialogueHistory.Count > maxHistoryEntries)
+            dialogueHistory.RemoveAt(0);
+
+        RefreshHistoryUI();
+    }
+
+    private void RefreshHistoryUI()
+    {
+        if (historyText == null)
+            return;
+
+        historyText.text = string.Join("\n\n", dialogueHistory);
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(historyText.rectTransform);
+        Canvas.ForceUpdateCanvases();
+    }
+
+    public void OpenHistory()
+    {
+        Debug.Log("OpenHistory called");
+
+        if (historyPanel == null)
+        {
+            Debug.LogError("historyPanel is NULL");
+            return;
+        }
+
+        historyPanel.SetActive(true);
+        Debug.Log("historyPanel active = " + historyPanel.activeSelf);
+
+        RefreshHistoryUI();
+
+        if (player != null)
+            player.SetUILock(true);
+
+        if (scrollRoutine != null)
+            StopCoroutine(scrollRoutine);
+
+        scrollRoutine = StartCoroutine(ScrollToBottomNextFrame());
+    }
+
+    public void CloseHistory()
+    {
+        if (historyPanel != null)
+            historyPanel.SetActive(false);
+
+        if (scrollRoutine != null)
+        {
+            StopCoroutine(scrollRoutine);
+            scrollRoutine = null;
+        }
+
+        if (player != null && !IsPlaying)
+            player.SetUILock(false);
+    }
+
+    public void ToggleHistory()
+    {
+        if (historyPanel == null)
+            return;
+
+        bool isOpen = historyPanel.activeSelf;
+
+        if (isOpen)
+            CloseHistory();
+        else
+            OpenHistory();
+    }
+
+    public void ClearHistory()
+    {
+        dialogueHistory.Clear();
+        RefreshHistoryUI();
+
+        if (scrollRoutine != null)
+            StopCoroutine(scrollRoutine);
+
+        scrollRoutine = StartCoroutine(ScrollToBottomNextFrame());
+    }
+
+    private IEnumerator ScrollToBottomNextFrame()
+    {
+        yield return null;
+        Canvas.ForceUpdateCanvases();
+
+        if (historyScrollRect != null)
+        {
+            historyScrollRect.verticalNormalizedPosition = 0f;
+        }
+
+        scrollRoutine = null;
     }
 }
