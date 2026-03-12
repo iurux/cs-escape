@@ -8172,7 +8172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemId: Blue Notebook
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e85bec4be46058c49a222cfaf70a6203, type: 3}
 --- !u!65 &343072126
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8813,6 +8813,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6586380701880126115, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1667696692}
+    - targetCorrespondingSourceObject: {fileID: 6586380701880126115, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1667696693}
   m_SourcePrefab: {fileID: 100100000, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
 --- !u!4 &374719213 stripped
 Transform:
@@ -10822,7 +10825,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d1e438948250bb349b565652b0324004, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10960,8 +10963,8 @@ Transform:
   m_GameObject: {fileID: 449283549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 40.7628, y: 29.5984, z: -50.826}
-  m_LocalScale: {x: 2.4339728, y: 2, z: 1.0949075}
+  m_LocalPosition: {x: 40.7628, y: 29.5984, z: -54.5553}
+  m_LocalScale: {x: 1.6882036, y: 2, z: 1.0949075}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 620017281}
@@ -11011,7 +11014,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 84493a2a8de3f804c8990115b017dc28, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -22005,8 +22008,8 @@ Transform:
   m_GameObject: {fileID: 896470289}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.9164, y: -22.47614, z: 4.59}
-  m_LocalScale: {x: 2.897647, y: 2, z: 1.89691}
+  m_LocalPosition: {x: -17.9164, y: -22.4761, z: 6.2122}
+  m_LocalScale: {x: 2.897647, y: 2, z: 1.5725384}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 535964459}
@@ -34717,7 +34720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1252
+      value: 0.135
       objectReference: {fileID: 0}
     - target: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -34725,7 +34728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0422
+      value: -0.042
       objectReference: {fileID: 0}
     - target: {fileID: 7863301623646972091, guid: 9295189b4f03b8a47b9873a8492069d1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -34830,7 +34833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemId: SnackOverflow Key
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 143871f126d8d134cb577bf2f614356a, type: 3}
 --- !u!4 &1506486860 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3204423859770501514, guid: 3713613c4ffcd6945900432c53af79b8, type: 3}
@@ -39947,6 +39950,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemID: 012 Key
+--- !u!114 &1667696693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667696689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bbba9dbadcea13439e34921f35b116c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 012 Key
+  icon: {fileID: 21300000, guid: 143871f126d8d134cb577bf2f614356a, type: 3}
 --- !u!1001 &1671958008
 PrefabInstance:
   m_ObjectHideFlags: 0
