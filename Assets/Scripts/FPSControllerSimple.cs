@@ -380,6 +380,15 @@ public class FPSControllerSimple : MonoBehaviour
                 : CursorLockMode.Locked;
             Cursor.visible = inventoryOpen;
 
+             // 如果 Inventory 被关闭
+            if (!inventoryOpen)
+            {
+                if (dialogueUI != null && dialogueUI.historyPanel != null && dialogueUI.historyPanel.activeSelf)
+                {
+                    dialogueUI.CloseHistory();
+                }
+            }
+
             // 🔥 只在“打开”时记录
             if (inventoryOpen)
             {

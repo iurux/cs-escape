@@ -222,8 +222,8 @@ public class MazeGame : MonoBehaviour
     {
         // ===== Base Hint（随关卡变化）=====
         string genRule =
-            "WASD to move\n" +
-            "1 / 2 to shift state\n" +
+            "WASD to move;\n" +
+            "1 / 2 to shift state;\n" +
             "Q to leave\n\n";
         if (level == 1)
         {
