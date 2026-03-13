@@ -5139,6 +5139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
@@ -6838,6 +6840,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 297735024}
   openAngleY: 90
   openSpeed: 2
@@ -12217,6 +12221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 503198087}
   openAngleY: 90
   openSpeed: 2
@@ -16324,6 +16330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30577b2b499fb6040a5cbda6102b3c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  clickClip: {fileID: 8300000, guid: 734f7adf5201ce94aa9a8f9a3d8d9d30, type: 3}
   uvLightSource: {fileID: 637133970}
   targetLayer:
     serializedVersion: 2
@@ -18701,6 +18709,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 765066714}
   openAngleY: 90
   openSpeed: 2
@@ -20359,6 +20369,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 839858202}
   openAngleY: 90
   openSpeed: 2
@@ -22897,6 +22909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
@@ -23215,6 +23229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9873f25773d9b4ff699ce01d816e6f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  elevatorOpenClip: {fileID: 8300000, guid: dc392239089321b43bd16021a111dda9, type: 3}
   checklistUI: {fileID: 513787069}
   dialogueUI: {fileID: 1665245401}
   blackScreen: {fileID: 478338510}
@@ -23314,6 +23330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
@@ -24310,6 +24328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
@@ -28673,6 +28693,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
@@ -31303,6 +31325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
@@ -32129,6 +32153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cc9e366457d4d4ab1185333b57acb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  clickClip: {fileID: 8300000, guid: 734f7adf5201ce94aa9a8f9a3d8d9d30, type: 3}
   lightSource: {fileID: 1389990605}
   isPickedUp: 0
 --- !u!1 &1393137384
@@ -32863,6 +32889,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 1411159600}
   openAngleY: 90
   openSpeed: 2
@@ -36905,6 +36933,135 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565076566}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1567908979
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1567908981}
+  - component: {fileID: 1567908980}
+  m_Layer: 0
+  m_Name: SoundEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1567908980
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567908979}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1567908981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567908979}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.3724136, y: 1.5522178, z: 16.302872}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1568836454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2624671227268106405, guid: a5ac041b79f79364ca8481b503332787, type: 3}
@@ -37825,6 +37982,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 1595336267}
   openAngleY: 90
   openSpeed: 2
@@ -41166,6 +41325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
@@ -41643,6 +41804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30577b2b499fb6040a5cbda6102b3c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  clickClip: {fileID: 8300000, guid: 734f7adf5201ce94aa9a8f9a3d8d9d30, type: 3}
   uvLightSource: {fileID: 637133970}
   targetLayer:
     serializedVersion: 2
@@ -42195,6 +42358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e817eed8a941d46a5e16e3e036bcd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  waterPourClip: {fileID: 8300000, guid: d171f8be2704a2d47bbc8e7805bd3b35, type: 3}
   realMugModel: {fileID: 1259413143}
   waterInsideCup: {fileID: 779955741}
   hiddenText: {fileID: 816022222}
@@ -42913,6 +43078,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 0}
   openAngleY: 90
   openSpeed: 2
@@ -45372,6 +45539,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652dc80a6ca20fa459c8ffe0144cb24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sfxSource: {fileID: 1567908980}
+  doorOpenClip: {fileID: 8300000, guid: ce4a88a91ba4d1b45a60d8115df83835, type: 3}
   doorToRotate: {fileID: 1914834586}
   openAngleY: 90
   openSpeed: 2
@@ -50373,3 +50542,4 @@ SceneRoots:
   - {fileID: 741396593}
   - {fileID: 326640279}
   - {fileID: 2010767537}
+  - {fileID: 1567908981}

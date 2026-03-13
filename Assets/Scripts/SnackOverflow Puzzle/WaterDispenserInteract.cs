@@ -3,6 +3,9 @@ using System.Collections;
 
 public class WaterDispenserInteract : MonoBehaviour
 {
+    public AudioSource sfxSource;       //  효과음 추가
+    public AudioClip waterPourClip;     // 효과음 추가
+
     [Header("Objects")]
     public GameObject realMugModel;
     public GameObject waterInsideCup;
@@ -28,10 +31,23 @@ public class WaterDispenserInteract : MonoBehaviour
     IEnumerator DrinkRoutine()
     {
         Debug.Log("Drinking...");
+        // PlayOneShot 대신 직접 할당하여 Play (중지 가능하게 함)
+        if (sfxSource != null && waterPourClip != null)
+        {
+            sfxSource.clip = waterPourClip;
+            sfxSource.Play();
+        }
 
         // 물 따르는 시간동안 멈추기
         yield return new WaitForSecondsRealtime(2f);
 
+        // 텍스트가 보이거나 다음 단계로 넘어갈 때 소리 중지
+        if (sfxSource != null)
+        {
+            sfxSource.Stop();
+        }
+
+        // 물과 텍스트가 나타남
         if (waterInsideCup != null) waterInsideCup.SetActive(true);
         if (hiddenText != null) hiddenText.SetActive(true);
 

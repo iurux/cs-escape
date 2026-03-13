@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class UVFlashlight : MonoBehaviour
 {
+    public AudioSource sfxSource;    // 효과음 추가
+    public AudioClip clickClip;      // 효과음 추가
+
     [Header("Settings")]
     public Light uvLightSource;
     public LayerMask targetLayer;
@@ -48,6 +51,9 @@ public class UVFlashlight : MonoBehaviour
 
     void ToggleLight()
     {
+        if (sfxSource != null && clickClip != null) // 효과음 추가
+            sfxSource.PlayOneShot(clickClip);
+
         isLightOn = !isLightOn;
         if (uvLightSource != null) uvLightSource.enabled = isLightOn;
     }

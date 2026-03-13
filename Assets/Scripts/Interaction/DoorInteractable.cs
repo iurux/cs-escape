@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class DoorInteractable : MonoBehaviour
 {
+    [Header("Sound Settings")]
+    public AudioSource sfxSource;       // SoundEffect 오브젝트 연결
+    public AudioClip doorOpenClip;      // 문 열릴 때 소리
+
     [Header("Door Rotation")]
     public Transform doorToRotate;
     public float openAngleY = 90f;
@@ -88,6 +92,11 @@ public class DoorInteractable : MonoBehaviour
                 });
                 return;
             }
+        }
+
+        if (sfxSource != null && doorOpenClip != null)
+        {
+             sfxSource.PlayOneShot(doorOpenClip);
         }
 
         // ===== 条件通过，开门 =====

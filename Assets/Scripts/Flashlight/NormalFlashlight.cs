@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class NormalFlashlight : MonoBehaviour
 {
+    public AudioSource sfxSource;    // 효과음 추가
+    public AudioClip clickClip;      // 효과음 추가
+
     [Header("Settings")]
     public Light lightSource;       
     public bool isPickedUp = false; 
@@ -36,6 +39,9 @@ public class NormalFlashlight : MonoBehaviour
     {
         Debug.Log("TOGGLE BY INPUT");
         if (lightSource == null) return;
+
+        if (sfxSource != null && clickClip != null) // 효과음 추가
+            sfxSource.PlayOneShot(clickClip);
 
         isOn = !isOn;
         lightSource.enabled = isOn;
